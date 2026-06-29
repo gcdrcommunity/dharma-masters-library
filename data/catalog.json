@@ -30,71 +30,71 @@
       "chapterCount": 17,
       "chapters": [
         {
-          "title": "第1章 付印前所寫",
+          "title": "付印前所寫",
           "path": "content/milarepa-biography/001-第1章-付印前所寫.md"
         },
         {
-          "title": "第2章 傳記開場與惹瓊巴請法",
+          "title": "傳記開場與惹瓊巴請法",
           "path": "content/milarepa-biography/002-第2章-傳記開場與惹瓊巴請法.md"
         },
         {
-          "title": "第3章 祖系、父母與童年",
+          "title": "祖系、父母與童年",
           "path": "content/milarepa-biography/003-第3章-祖系-父母與童年.md"
         },
         {
-          "title": "第4章 父亡後受欺與家產被奪",
+          "title": "父亡後受欺與家產被奪",
           "path": "content/milarepa-biography/004-第4章-父亡後受欺與家產被奪.md"
         },
         {
-          "title": "第5章 立誓報仇與修咒造業",
+          "title": "立誓報仇與修咒造業",
           "path": "content/milarepa-biography/005-第5章-立誓報仇與修咒造業.md"
         },
         {
-          "title": "第6章 悔罪求正法與初入馬爾巴門下",
+          "title": "悔罪求正法與初入馬爾巴門下",
           "path": "content/milarepa-biography/006-第6章-悔罪求正法與初入馬爾巴門下.md"
         },
         {
-          "title": "第7章 馬爾巴試煉：建屋苦行與屢次被拒",
+          "title": "馬爾巴試煉：建屋苦行與屢次被拒",
           "path": "content/milarepa-biography/007-第7章-馬爾巴試煉：建屋苦行與屢次被拒.md"
         },
         {
-          "title": "第8章 馬爾巴攝受：灌頂、授記與修法",
+          "title": "馬爾巴攝受：灌頂、授記與修法",
           "path": "content/milarepa-biography/008-第8章-馬爾巴攝受：灌頂-授記與修法.md"
         },
         {
-          "title": "第9章 臥虎崖閉關、悟解呈白與返鄉因緣",
+          "title": "臥虎崖閉關、悟解呈白與返鄉因緣",
           "path": "content/milarepa-biography/009-第9章-臥虎崖閉關-悟解呈白與返鄉因緣.md"
         },
         {
-          "title": "第10章 夢兆返鄉與告別馬爾巴",
+          "title": "夢兆返鄉與告別馬爾巴",
           "path": "content/milarepa-biography/010-第10章-夢兆返鄉與告別馬爾巴.md"
         },
         {
-          "title": "第11章 返鄉見母骨與立誓終身修行",
+          "title": "返鄉見母骨與立誓終身修行",
           "path": "content/milarepa-biography/011-第11章-返鄉見母骨與立誓終身修行.md"
         },
         {
-          "title": "第12章 深山苦行與親友勸請",
+          "title": "深山苦行與親友勸請",
           "path": "content/milarepa-biography/012-第12章-深山苦行與親友勸請.md"
         },
         {
-          "title": "第13章 利生事業、山窟與弟子成就",
+          "title": "利生事業、山窟與弟子成就",
           "path": "content/milarepa-biography/013-第13章-利生事業-山窟與弟子成就.md"
         },
         {
-          "title": "第14章 操普博士與毒藥因緣",
+          "title": "操普博士與毒藥因緣",
           "path": "content/milarepa-biography/014-第14章-操普博士與毒藥因緣.md"
         },
         {
-          "title": "第15章 涅槃前教誡與最後咐囑",
+          "title": "涅槃前教誡與最後咐囑",
           "path": "content/milarepa-biography/015-第15章-涅槃前教誡與最後咐囑.md"
         },
         {
-          "title": "第16章 入滅、荼毗瑞相與惹瓊巴",
+          "title": "入滅、荼毗瑞相與惹瓊巴",
           "path": "content/milarepa-biography/016-第16章-入滅-荼毗瑞相與惹瓊巴.md"
         },
         {
-          "title": "第17章 舍利、弟子傳承與結語",
+          "title": "舍利、弟子傳承與結語",
           "path": "content/milarepa-biography/017-第17章-舍利-弟子傳承與結語.md"
         }
       ]
@@ -353,7 +353,7 @@
     },
     "jewel-ornament-of-liberation": {
       "title": "解脫莊嚴寶",
-      "displayTitle": "《解脫莊嚴寶・大乘菩提道次第論》",
+      "displayTitle": "《解脫莊嚴寶》",
       "translator": "張澄基漢譯",
       "chapterCount": 21,
       "chapters": [
@@ -444,13 +444,13 @@
       ]
     },
     "precious-garland-of-the-supreme-path": {
-      "title": "成就勝道・寶鬘集",
-      "displayTitle": "《成就勝道・寶鬘集》",
+      "title": "成就勝道寶鬘集",
+      "displayTitle": "《成就勝道寶鬘集》",
       "translator": "張澄基漢譯",
       "chapterCount": 28,
       "chapters": [
         {
-          "title": "成就勝道・寶鬘集",
+          "title": "成就勝道寶鬘集",
           "path": "content/precious-garland-of-the-supreme-path/001-成就勝道寶鬘集.md"
         },
         {
