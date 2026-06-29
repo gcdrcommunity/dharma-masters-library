@@ -133,7 +133,7 @@ h3 { font-size: 1.2em; color: var(--secondary); margin-top: 1em; }
     gap: 0.5em;
     margin-bottom: 1.5em;
     flex-wrap: wrap;
-    max-height: 108px;
+    max-height: 120px;
     overflow-y: auto;
     padding: 0.5em;
     border: 1px solid var(--border);
