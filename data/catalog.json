@@ -1,0 +1,603 @@
+{
+  "title": "祖師教言文庫",
+  "subtitle": "歷代祖師文集、傳記、道歌與修道教言",
+  "description": "本文庫專門整理已流傳之祖師文獻與教言，包含祖師傳記、道歌、論著與修道教言，作為聞思修學與次第閱讀的參考。",
+  "footer": "祖師教言文庫 | 光明洲實修中心",
+  "authors": [
+    {
+      "name": "密勒日巴尊者",
+      "works": [
+        "milarepa-biography",
+        "milarepa-songs"
+      ]
+    },
+    {
+      "name": "岡波巴大師",
+      "works": [
+        "jewel-ornament-of-liberation",
+        "precious-garland-of-the-supreme-path",
+        "selected-instructions",
+        "gampopa-biography",
+        "gampopa-stories"
+      ]
+    }
+  ],
+  "works": {
+    "milarepa-biography": {
+      "title": "密勒日巴傳",
+      "displayTitle": "《密勒日巴傳》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 17,
+      "chapters": [
+        {
+          "title": "第1章 付印前所寫",
+          "path": "content/milarepa-biography/001-第1章-付印前所寫.md"
+        },
+        {
+          "title": "第2章 傳記開場與惹瓊巴請法",
+          "path": "content/milarepa-biography/002-第2章-傳記開場與惹瓊巴請法.md"
+        },
+        {
+          "title": "第3章 祖系、父母與童年",
+          "path": "content/milarepa-biography/003-第3章-祖系-父母與童年.md"
+        },
+        {
+          "title": "第4章 父亡後受欺與家產被奪",
+          "path": "content/milarepa-biography/004-第4章-父亡後受欺與家產被奪.md"
+        },
+        {
+          "title": "第5章 立誓報仇與修咒造業",
+          "path": "content/milarepa-biography/005-第5章-立誓報仇與修咒造業.md"
+        },
+        {
+          "title": "第6章 悔罪求正法與初入馬爾巴門下",
+          "path": "content/milarepa-biography/006-第6章-悔罪求正法與初入馬爾巴門下.md"
+        },
+        {
+          "title": "第7章 馬爾巴試煉：建屋苦行與屢次被拒",
+          "path": "content/milarepa-biography/007-第7章-馬爾巴試煉：建屋苦行與屢次被拒.md"
+        },
+        {
+          "title": "第8章 馬爾巴攝受：灌頂、授記與修法",
+          "path": "content/milarepa-biography/008-第8章-馬爾巴攝受：灌頂-授記與修法.md"
+        },
+        {
+          "title": "第9章 臥虎崖閉關、悟解呈白與返鄉因緣",
+          "path": "content/milarepa-biography/009-第9章-臥虎崖閉關-悟解呈白與返鄉因緣.md"
+        },
+        {
+          "title": "第10章 夢兆返鄉與告別馬爾巴",
+          "path": "content/milarepa-biography/010-第10章-夢兆返鄉與告別馬爾巴.md"
+        },
+        {
+          "title": "第11章 返鄉見母骨與立誓終身修行",
+          "path": "content/milarepa-biography/011-第11章-返鄉見母骨與立誓終身修行.md"
+        },
+        {
+          "title": "第12章 深山苦行與親友勸請",
+          "path": "content/milarepa-biography/012-第12章-深山苦行與親友勸請.md"
+        },
+        {
+          "title": "第13章 利生事業、山窟與弟子成就",
+          "path": "content/milarepa-biography/013-第13章-利生事業-山窟與弟子成就.md"
+        },
+        {
+          "title": "第14章 操普博士與毒藥因緣",
+          "path": "content/milarepa-biography/014-第14章-操普博士與毒藥因緣.md"
+        },
+        {
+          "title": "第15章 涅槃前教誡與最後咐囑",
+          "path": "content/milarepa-biography/015-第15章-涅槃前教誡與最後咐囑.md"
+        },
+        {
+          "title": "第16章 入滅、荼毗瑞相與惹瓊巴",
+          "path": "content/milarepa-biography/016-第16章-入滅-荼毗瑞相與惹瓊巴.md"
+        },
+        {
+          "title": "第17章 舍利、弟子傳承與結語",
+          "path": "content/milarepa-biography/017-第17章-舍利-弟子傳承與結語.md"
+        }
+      ]
+    },
+    "milarepa-songs": {
+      "title": "密勒日巴道歌集",
+      "displayTitle": "《密勒日巴道歌集》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 61,
+      "chapters": [
+        {
+          "title": "密勒拾柴記",
+          "path": "content/milarepa-songs/001-密勒拾柴記.md"
+        },
+        {
+          "title": "善河降魔記",
+          "path": "content/milarepa-songs/002-善河降魔記.md"
+        },
+        {
+          "title": "雪山之歌",
+          "path": "content/milarepa-songs/003-雪山之歌.md"
+        },
+        {
+          "title": "崖魔女的挑戰",
+          "path": "content/milarepa-songs/004-崖魔女的挑戰.md"
+        },
+        {
+          "title": "密勒日巴於繞馬",
+          "path": "content/milarepa-songs/005-密勒日巴於繞馬.md"
+        },
+        {
+          "title": "密勒日巴在獨利虛空堡",
+          "path": "content/milarepa-songs/006-密勒日巴在獨利虛空堡.md"
+        },
+        {
+          "title": "修行人的快樂",
+          "path": "content/milarepa-songs/007-修行人的快樂.md"
+        },
+        {
+          "title": "八天女供食的故事",
+          "path": "content/milarepa-songs/008-八天女供食的故事.md"
+        },
+        {
+          "title": "密勒日巴於灰崖金剛堡",
+          "path": "content/milarepa-songs/009-密勒日巴於灰崖金剛堡.md"
+        },
+        {
+          "title": "惹瓊巴初遇尊者",
+          "path": "content/milarepa-songs/010-惹瓊巴初遇尊者.md"
+        },
+        {
+          "title": "學佛之困難",
+          "path": "content/milarepa-songs/011-學佛之困難.md"
+        },
+        {
+          "title": "牧牛童覓心的故事",
+          "path": "content/milarepa-songs/012-牧牛童覓心的故事.md"
+        },
+        {
+          "title": "密勒日巴對法師釋迦古那的開示",
+          "path": "content/milarepa-songs/013-密勒日巴對法師釋迦古那的開示.md"
+        },
+        {
+          "title": "女弟子－－巴達朋的故事",
+          "path": "content/milarepa-songs/014-女弟子－－巴達朋的故事.md"
+        },
+        {
+          "title": "旅店中的開示",
+          "path": "content/milarepa-songs/015-旅店中的開示.md"
+        },
+        {
+          "title": "強盜弟子熾貢惹巴",
+          "path": "content/milarepa-songs/016-強盜弟子熾貢惹巴.md"
+        },
+        {
+          "title": "銀溪相遇記",
+          "path": "content/milarepa-songs/017-銀溪相遇記.md"
+        },
+        {
+          "title": "藤杖之歌",
+          "path": "content/milarepa-songs/018-藤杖之歌.md"
+        },
+        {
+          "title": "廿一種心要曲",
+          "path": "content/milarepa-songs/019-廿一種心要曲.md"
+        },
+        {
+          "title": "無常八喻曲",
+          "path": "content/milarepa-songs/020-無常八喻曲.md"
+        },
+        {
+          "title": "第廿一篇 學道需及時的開示",
+          "path": "content/milarepa-songs/021-第廿一篇-學道需及時的開示.md"
+        },
+        {
+          "title": "第廿二篇 笛色雪山降伏外道的故事",
+          "path": "content/milarepa-songs/022-第廿二篇-笛色雪山降伏外道的故事.md"
+        },
+        {
+          "title": "第廿三篇 惹瓊巴的開悟",
+          "path": "content/milarepa-songs/023-第廿三篇-惹瓊巴的開悟.md"
+        },
+        {
+          "title": "第廿四篇 一個垂危笨教徒的復生",
+          "path": "content/milarepa-songs/024-第廿四篇-一個垂危笨教徒的復生.md"
+        },
+        {
+          "title": "第廿五篇 大女弟子惹瓊瑪的故事",
+          "path": "content/milarepa-songs/025-第廿五篇-大女弟子惹瓊瑪的故事.md"
+        },
+        {
+          "title": "第廿六篇 獵人與鹿",
+          "path": "content/milarepa-songs/026-第廿六篇-獵人與鹿.md"
+        },
+        {
+          "title": "第廿七篇 尼泊爾王之迎請",
+          "path": "content/milarepa-songs/027-第廿七篇-尼泊爾王之迎請.md"
+        },
+        {
+          "title": "第廿八篇 長壽女神之侵襲",
+          "path": "content/milarepa-songs/028-第廿八篇-長壽女神之侵襲.md"
+        },
+        {
+          "title": "第廿九篇 長壽女神之度化",
+          "path": "content/milarepa-songs/029-第廿九篇-長壽女神之度化.md"
+        },
+        {
+          "title": "中陰救度密法的開示",
+          "path": "content/milarepa-songs/030-中陰救度密法的開示.md"
+        },
+        {
+          "title": "第卅一篇 長壽女神與空樂瑜伽",
+          "path": "content/milarepa-songs/031-第卅一篇-長壽女神與空樂瑜伽.md"
+        },
+        {
+          "title": "第卅二篇 道剛惹巴的故事",
+          "path": "content/milarepa-songs/032-第卅二篇-道剛惹巴的故事.md"
+        },
+        {
+          "title": "第卅三篇 二大成就者之會晤",
+          "path": "content/milarepa-songs/033-第卅三篇-二大成就者之會晤.md"
+        },
+        {
+          "title": "第卅四篇 密勒日巴與佛學家的辯論",
+          "path": "content/milarepa-songs/034-第卅四篇-密勒日巴與佛學家的辯論.md"
+        },
+        {
+          "title": "第卅五篇 惹瓊巴初朝印度",
+          "path": "content/milarepa-songs/035-第卅五篇-惹瓊巴初朝印度.md"
+        },
+        {
+          "title": "第卅六篇 修持心要的開示",
+          "path": "content/milarepa-songs/036-第卅六篇-修持心要的開示.md"
+        },
+        {
+          "title": "第卅七篇 薩來娥的故事",
+          "path": "content/milarepa-songs/037-第卅七篇-薩來娥的故事.md"
+        },
+        {
+          "title": "第卅八篇 牛角的故事",
+          "path": "content/milarepa-songs/038-第卅八篇-牛角的故事.md"
+        },
+        {
+          "title": "第卅九篇 惹瓊巴的悔悟",
+          "path": "content/milarepa-songs/039-第卅九篇-惹瓊巴的悔悟.md"
+        },
+        {
+          "title": "連貢日巴的悔悟",
+          "path": "content/milarepa-songs/040-連貢日巴的悔悟.md"
+        },
+        {
+          "title": "岡波巴的故事",
+          "path": "content/milarepa-songs/041-岡波巴的故事.md"
+        },
+        {
+          "title": "羅頓法師的故事",
+          "path": "content/milarepa-songs/042-羅頓法師的故事.md"
+        },
+        {
+          "title": "八種快樂歌",
+          "path": "content/milarepa-songs/043-八種快樂歌.md"
+        },
+        {
+          "title": "調伏邪見僧眾的故事",
+          "path": "content/milarepa-songs/044-調伏邪見僧眾的故事.md"
+        },
+        {
+          "title": "法音鱗爪",
+          "path": "content/milarepa-songs/045-法音鱗爪.md"
+        },
+        {
+          "title": "笨波山的故事",
+          "path": "content/milarepa-songs/046-笨波山的故事.md"
+        },
+        {
+          "title": "灌頂和開光的故事",
+          "path": "content/milarepa-songs/047-灌頂和開光的故事.md"
+        },
+        {
+          "title": "新多姆和來賽朋的故事",
+          "path": "content/milarepa-songs/048-新多姆和來賽朋的故事.md"
+        },
+        {
+          "title": "被宰的羔羊",
+          "path": "content/milarepa-songs/049-被宰的羔羊.md"
+        },
+        {
+          "title": "瑜伽飲酒歌",
+          "path": "content/milarepa-songs/050-瑜伽飲酒歌.md"
+        },
+        {
+          "title": "對惹瓊巴之衷心忠告",
+          "path": "content/milarepa-songs/051-對惹瓊巴之衷心忠告.md"
+        },
+        {
+          "title": "惹瓊巴離師赴衛",
+          "path": "content/milarepa-songs/052-惹瓊巴離師赴衛.md"
+        },
+        {
+          "title": "密勒日巴與當巴桑結的會晤",
+          "path": "content/milarepa-songs/053-密勒日巴與當巴桑結的會晤.md"
+        },
+        {
+          "title": "超度亡靈的故事",
+          "path": "content/milarepa-songs/054-超度亡靈的故事.md"
+        },
+        {
+          "title": "對雅龍施主們的開示",
+          "path": "content/milarepa-songs/055-對雅龍施主們的開示.md"
+        },
+        {
+          "title": "對醫生陽額的開示",
+          "path": "content/milarepa-songs/056-對醫生陽額的開示.md"
+        },
+        {
+          "title": "惹瓊巴的成就",
+          "path": "content/milarepa-songs/057-惹瓊巴的成就.md"
+        },
+        {
+          "title": "論學法與修持",
+          "path": "content/milarepa-songs/058-論學法與修持.md"
+        },
+        {
+          "title": "修行人的伴侶",
+          "path": "content/milarepa-songs/059-修行人的伴侶.md"
+        },
+        {
+          "title": "成就之徵兆",
+          "path": "content/milarepa-songs/060-成就之徵兆.md"
+        },
+        {
+          "title": "最後的開示",
+          "path": "content/milarepa-songs/061-最後的開示.md"
+        }
+      ]
+    },
+    "jewel-ornament-of-liberation": {
+      "title": "解脫莊嚴寶",
+      "displayTitle": "《解脫莊嚴寶》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 21,
+      "chapters": [
+        {
+          "title": "第一章 明成佛之因",
+          "path": "content/jewel-ornament-of-liberation/001-第一章-明成佛之因.md"
+        },
+        {
+          "title": "第二章 明成佛之所依",
+          "path": "content/jewel-ornament-of-liberation/002-第二章-明成佛之所依.md"
+        },
+        {
+          "title": "第三章 明善知識",
+          "path": "content/jewel-ornament-of-liberation/003-第三章-明善知識.md"
+        },
+        {
+          "title": "第四章 成佛之方法",
+          "path": "content/jewel-ornament-of-liberation/004-第四章-成佛之方法.md"
+        },
+        {
+          "title": "第五章 輪迴之苦痛",
+          "path": "content/jewel-ornament-of-liberation/005-第五章-輪迴之苦痛.md"
+        },
+        {
+          "title": "第六章 業果之概說",
+          "path": "content/jewel-ornament-of-liberation/006-第六章-業果之概說.md"
+        },
+        {
+          "title": "第七章 慈心與悲心",
+          "path": "content/jewel-ornament-of-liberation/007-第七章-慈心與悲心.md"
+        },
+        {
+          "title": "第八章 皈依與淨戒",
+          "path": "content/jewel-ornament-of-liberation/008-第八章-皈依與淨戒.md"
+        },
+        {
+          "title": "第九章 論發菩提心",
+          "path": "content/jewel-ornament-of-liberation/009-第九章-論發菩提心.md"
+        },
+        {
+          "title": "第十章 願菩提心之學處",
+          "path": "content/jewel-ornament-of-liberation/010-第十章-願菩提心之學處.md"
+        },
+        {
+          "title": "第十一章 總說六波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/011-第十一章-總說六波羅蜜多.md"
+        },
+        {
+          "title": "第十二章 佈施波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/012-第十二章-佈施波羅蜜多.md"
+        },
+        {
+          "title": "第十三章 持戒波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/013-第十三章-持戒波羅蜜多.md"
+        },
+        {
+          "title": "第十四章 忍辱波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/014-第十四章-忍辱波羅蜜多.md"
+        },
+        {
+          "title": "第十五章 精進波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/015-第十五章-精進波羅蜜多.md"
+        },
+        {
+          "title": "第十六章 禪定波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/016-第十六章-禪定波羅蜜多.md"
+        },
+        {
+          "title": "第十七章 般若波羅蜜多",
+          "path": "content/jewel-ornament-of-liberation/017-第十七章-般若波羅蜜多.md"
+        },
+        {
+          "title": "第十八章 說道階次第",
+          "path": "content/jewel-ornament-of-liberation/018-第十八章-說道階次第.md"
+        },
+        {
+          "title": "第十九章 菩薩地道",
+          "path": "content/jewel-ornament-of-liberation/019-第十九章-菩薩地道.md"
+        },
+        {
+          "title": "第二十章 圓滿佛果",
+          "path": "content/jewel-ornament-of-liberation/020-第二十章-圓滿佛果.md"
+        },
+        {
+          "title": "第二十一章 佛事業",
+          "path": "content/jewel-ornament-of-liberation/021-第二十一章-佛事業.md"
+        }
+      ]
+    },
+    "precious-garland-of-the-supreme-path": {
+      "title": "成就勝道寶鬘集",
+      "displayTitle": "《成就勝道寶鬘集》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 28,
+      "chapters": [
+        {
+          "title": "成就勝道寶鬘集",
+          "path": "content/precious-garland-of-the-supreme-path/001-成就勝道寶鬘集.md"
+        },
+        {
+          "title": "十項必須之法",
+          "path": "content/precious-garland-of-the-supreme-path/002-十項必須之法.md"
+        },
+        {
+          "title": "十項應當依循之事",
+          "path": "content/precious-garland-of-the-supreme-path/003-十項應當依循之事.md"
+        },
+        {
+          "title": "十項應當遠離之事",
+          "path": "content/precious-garland-of-the-supreme-path/004-十項應當遠離之事.md"
+        },
+        {
+          "title": "十項不應舍之法",
+          "path": "content/precious-garland-of-the-supreme-path/005-十項不應舍之法.md"
+        },
+        {
+          "title": "十項應當謹記之事",
+          "path": "content/precious-garland-of-the-supreme-path/006-十項應當謹記之事.md"
+        },
+        {
+          "title": "十項應當實行之事",
+          "path": "content/precious-garland-of-the-supreme-path/007-十項應當實行之事.md"
+        },
+        {
+          "title": "十項應當努力之事",
+          "path": "content/precious-garland-of-the-supreme-path/008-十項應當努力之事.md"
+        },
+        {
+          "title": "十項激勵自己之法",
+          "path": "content/precious-garland-of-the-supreme-path/009-十項激勵自己之法.md"
+        },
+        {
+          "title": "十項流入錯誤之法",
+          "path": "content/precious-garland-of-the-supreme-path/010-十項流入錯誤之法.md"
+        },
+        {
+          "title": "十項錯誤之法",
+          "path": "content/precious-garland-of-the-supreme-path/011-十項錯誤之法.md"
+        },
+        {
+          "title": "十項無錯謬之法",
+          "path": "content/precious-garland-of-the-supreme-path/012-十項無錯謬之法.md"
+        },
+        {
+          "title": "十四項無義利之顛倒行為",
+          "path": "content/precious-garland-of-the-supreme-path/013-十四項無義利之顛倒行為.md"
+        },
+        {
+          "title": "學佛人的十八項過失",
+          "path": "content/precious-garland-of-the-supreme-path/014-學佛人的十八項過失.md"
+        },
+        {
+          "title": "十一項不可缺少之法",
+          "path": "content/precious-garland-of-the-supreme-path/015-十一項不可缺少之法.md"
+        },
+        {
+          "title": "十一種上人之象徵或德相",
+          "path": "content/precious-garland-of-the-supreme-path/016-十一種上人之象徵或德相.md"
+        },
+        {
+          "title": "十項無利益無意義之法",
+          "path": "content/precious-garland-of-the-supreme-path/017-十項無利益無意義之法.md"
+        },
+        {
+          "title": "十項自討苦吃之事",
+          "path": "content/precious-garland-of-the-supreme-path/018-十項自討苦吃之事.md"
+        },
+        {
+          "title": "十項自己受益之事",
+          "path": "content/precious-garland-of-the-supreme-path/019-十項自己受益之事.md"
+        },
+        {
+          "title": "十項正妙之法",
+          "path": "content/precious-garland-of-the-supreme-path/020-十項正妙之法.md"
+        },
+        {
+          "title": "十項愚不可及之事",
+          "path": "content/precious-garland-of-the-supreme-path/021-十項愚不可及之事.md"
+        },
+        {
+          "title": "十項需要之法",
+          "path": "content/precious-garland-of-the-supreme-path/022-十項需要之法.md"
+        },
+        {
+          "title": "十項不必作的事",
+          "path": "content/precious-garland-of-the-supreme-path/023-十項不必作的事.md"
+        },
+        {
+          "title": "十項殊勝之法",
+          "path": "content/precious-garland-of-the-supreme-path/024-十項殊勝之法.md"
+        },
+        {
+          "title": "十項任何皆好之法",
+          "path": "content/precious-garland-of-the-supreme-path/025-十項任何皆好之法.md"
+        },
+        {
+          "title": "由正法所出生之十項功德法",
+          "path": "content/precious-garland-of-the-supreme-path/026-由正法所出生之十項功德法.md"
+        },
+        {
+          "title": "十項唯名(無實) 之法",
+          "path": "content/precious-garland-of-the-supreme-path/027-十項唯名(無實)-之法.md"
+        },
+        {
+          "title": "十項任運成就之大樂",
+          "path": "content/precious-garland-of-the-supreme-path/028-十項任運成就之大樂.md"
+        }
+      ]
+    },
+    "selected-instructions": {
+      "title": "教言廣集零選",
+      "displayTitle": "《教言廣集零選》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 1,
+      "chapters": [
+        {
+          "title": "第三篇 教言廣集零選",
+          "path": "content/selected-instructions/001-第三篇-教言廣集零選.md"
+        }
+      ]
+    },
+    "gampopa-biography": {
+      "title": "岡波巴大師傳",
+      "displayTitle": "《岡波巴大師傳》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 1,
+      "chapters": [
+        {
+          "title": "第四篇 岡波巴大師傳",
+          "path": "content/gampopa-biography/001-第四篇-岡波巴大師傳.md"
+        }
+      ]
+    },
+    "gampopa-stories": {
+      "title": "岡波巴大師的故事",
+      "displayTitle": "《岡波巴大師的故事》",
+      "translator": "張澄基漢譯",
+      "chapterCount": 1,
+      "chapters": [
+        {
+          "title": "岡波巴大師的故事",
+          "path": "content/gampopa-stories/001-岡波巴大師的故事.md"
+        }
+      ]
+    }
+  }
+}
