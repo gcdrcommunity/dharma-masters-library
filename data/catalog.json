@@ -447,119 +447,123 @@
       "title": "成就勝道寶鬘集",
       "displayTitle": "《成就勝道寶鬘集》",
       "translator": "張澄基漢譯",
-      "chapterCount": 28,
+      "chapterCount": 29,
       "chapters": [
         {
           "title": "成就勝道寶鬘集",
           "path": "content/precious-garland-of-the-supreme-path/001-成就勝道寶鬘集.md"
         },
         {
+          "title": "常念十種可悲之法",
+          "path": "content/precious-garland-of-the-supreme-path/002-常念十種可悲之法.md"
+        },
+        {
           "title": "十項必須之法",
-          "path": "content/precious-garland-of-the-supreme-path/002-十項必須之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/003-十項必須之法.md"
         },
         {
           "title": "十項應當依循之事",
-          "path": "content/precious-garland-of-the-supreme-path/003-十項應當依循之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/004-十項應當依循之事.md"
         },
         {
           "title": "十項應當遠離之事",
-          "path": "content/precious-garland-of-the-supreme-path/004-十項應當遠離之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/005-十項應當遠離之事.md"
         },
         {
-          "title": "十項不應舍之法",
-          "path": "content/precious-garland-of-the-supreme-path/005-十項不應舍之法.md"
+          "title": "十項不應捨之法",
+          "path": "content/precious-garland-of-the-supreme-path/006-十項不應捨之法.md"
         },
         {
           "title": "十項應當謹記之事",
-          "path": "content/precious-garland-of-the-supreme-path/006-十項應當謹記之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/007-十項應當謹記之事.md"
         },
         {
           "title": "十項應當實行之事",
-          "path": "content/precious-garland-of-the-supreme-path/007-十項應當實行之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/008-十項應當實行之事.md"
         },
         {
           "title": "十項應當努力之事",
-          "path": "content/precious-garland-of-the-supreme-path/008-十項應當努力之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/009-十項應當努力之事.md"
         },
         {
           "title": "十項激勵自己之法",
-          "path": "content/precious-garland-of-the-supreme-path/009-十項激勵自己之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/010-十項激勵自己之法.md"
         },
         {
           "title": "十項流入錯誤之法",
-          "path": "content/precious-garland-of-the-supreme-path/010-十項流入錯誤之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/011-十項流入錯誤之法.md"
         },
         {
           "title": "十項錯誤之法",
-          "path": "content/precious-garland-of-the-supreme-path/011-十項錯誤之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/012-十項錯誤之法.md"
         },
         {
           "title": "十項無錯謬之法",
-          "path": "content/precious-garland-of-the-supreme-path/012-十項無錯謬之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/013-十項無錯謬之法.md"
         },
         {
           "title": "十四項無義利之顛倒行為",
-          "path": "content/precious-garland-of-the-supreme-path/013-十四項無義利之顛倒行為.md"
+          "path": "content/precious-garland-of-the-supreme-path/014-十四項無義利之顛倒行為.md"
         },
         {
           "title": "學佛人的十八項過失",
-          "path": "content/precious-garland-of-the-supreme-path/014-學佛人的十八項過失.md"
+          "path": "content/precious-garland-of-the-supreme-path/015-學佛人的十八項過失.md"
         },
         {
           "title": "十一項不可缺少之法",
-          "path": "content/precious-garland-of-the-supreme-path/015-十一項不可缺少之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/016-十一項不可缺少之法.md"
         },
         {
           "title": "十一種上人之象徵或德相",
-          "path": "content/precious-garland-of-the-supreme-path/016-十一種上人之象徵或德相.md"
+          "path": "content/precious-garland-of-the-supreme-path/017-十一種上人之象徵或德相.md"
         },
         {
           "title": "十項無利益無意義之法",
-          "path": "content/precious-garland-of-the-supreme-path/017-十項無利益無意義之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/018-十項無利益無意義之法.md"
         },
         {
           "title": "十項自討苦吃之事",
-          "path": "content/precious-garland-of-the-supreme-path/018-十項自討苦吃之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/019-十項自討苦吃之事.md"
         },
         {
           "title": "十項自己受益之事",
-          "path": "content/precious-garland-of-the-supreme-path/019-十項自己受益之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/020-十項自己受益之事.md"
         },
         {
           "title": "十項正妙之法",
-          "path": "content/precious-garland-of-the-supreme-path/020-十項正妙之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/021-十項正妙之法.md"
         },
         {
           "title": "十項愚不可及之事",
-          "path": "content/precious-garland-of-the-supreme-path/021-十項愚不可及之事.md"
+          "path": "content/precious-garland-of-the-supreme-path/022-十項愚不可及之事.md"
         },
         {
           "title": "十項需要之法",
-          "path": "content/precious-garland-of-the-supreme-path/022-十項需要之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/023-十項需要之法.md"
         },
         {
           "title": "十項不必作的事",
-          "path": "content/precious-garland-of-the-supreme-path/023-十項不必作的事.md"
+          "path": "content/precious-garland-of-the-supreme-path/024-十項不必作的事.md"
         },
         {
           "title": "十項殊勝之法",
-          "path": "content/precious-garland-of-the-supreme-path/024-十項殊勝之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/025-十項殊勝之法.md"
         },
         {
           "title": "十項任何皆好之法",
-          "path": "content/precious-garland-of-the-supreme-path/025-十項任何皆好之法.md"
+          "path": "content/precious-garland-of-the-supreme-path/026-十項任何皆好之法.md"
         },
         {
           "title": "由正法所出生之十項功德法",
-          "path": "content/precious-garland-of-the-supreme-path/026-由正法所出生之十項功德法.md"
+          "path": "content/precious-garland-of-the-supreme-path/027-由正法所出生之十項功德法.md"
         },
         {
-          "title": "十項唯名(無實) 之法",
-          "path": "content/precious-garland-of-the-supreme-path/027-十項唯名(無實)-之法.md"
+          "title": "十項唯名（無實）之法",
+          "path": "content/precious-garland-of-the-supreme-path/028-十項唯名(無實)之法.md"
         },
         {
           "title": "十項任運成就之大樂",
-          "path": "content/precious-garland-of-the-supreme-path/028-十項任運成就之大樂.md"
+          "path": "content/precious-garland-of-the-supreme-path/029-十項任運成就之大樂.md"
         }
       ]
     },
