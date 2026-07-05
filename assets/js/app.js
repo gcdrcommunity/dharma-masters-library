@@ -233,3 +233,18 @@ window.onclick = event => {
 
 window.addEventListener('hashchange', init);
 document.addEventListener('DOMContentLoaded', init);
+
+// 返回頂部功能
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.add('show');
+  } else {
+    backToTopBtn.classList.remove('show');
+  }
+});
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
