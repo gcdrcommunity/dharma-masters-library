@@ -7,6 +7,52 @@
     <meta name="supported-color-schemes" content="light">
     <title>祖師教言文庫</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .reader-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0 16px;
+            padding: 12px;
+            border: 1px solid rgba(122, 92, 58, 0.18);
+            border-radius: 14px;
+            background: rgba(250, 247, 240, 0.72);
+        }
+
+        .reader-tools button {
+            appearance: none;
+            border: 1px solid rgba(122, 92, 58, 0.35);
+            border-radius: 999px;
+            background: #fffaf2;
+            color: #6e4f2a;
+            font-size: 0.95rem;
+            line-height: 1;
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        .reader-tools button:hover,
+        .reader-tools button:focus-visible {
+            background: #f4ead8;
+            outline: none;
+        }
+
+        .reader-tools button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .reader-status {
+            flex-basis: 100%;
+            min-height: 1.4em;
+            font-size: 0.88rem;
+            color: #8a7358;
+        }
+    </style>
 </head>
 <body>
     <div id="homeView" class="view active">
@@ -44,6 +90,14 @@
                 <button class="nav-tab" data-tab="toc" onclick="switchTab('toc', event)">目錄</button>
             </div>
 
+            <div class="reader-tools" aria-label="朗讀工具">
+                <button type="button" id="readAloudBtn">朗讀本頁</button>
+                <button type="button" id="pauseReadBtn" disabled>暫停</button>
+                <button type="button" id="resumeReadBtn" disabled>繼續</button>
+                <button type="button" id="stopReadBtn" disabled>停止</button>
+                <div class="reader-status" id="readerStatus" aria-live="polite"></div>
+            </div>
+
             <article id="textPanel" class="content-panel active"></article>
             <aside id="tocPanel" class="content-panel">
                 <ul class="toc-list" id="tocList"></ul>
@@ -68,5 +122,169 @@
     </div>
 
     <script src="assets/js/app.js"></script>
+    <script>
+        (function () {
+            const synth = window.speechSynthesis;
+            const readBtn = document.getElementById('readAloudBtn');
+            const pauseBtn = document.getElementById('pauseReadBtn');
+            const resumeBtn = document.getElementById('resumeReadBtn');
+            const stopBtn = document.getElementById('stopReadBtn');
+            const status = document.getElementById('readerStatus');
+            const textPanel = document.getElementById('textPanel');
+
+            let chunks = [];
+            let chunkIndex = 0;
+            let currentUtterance = null;
+            let isReading = false;
+
+            if (!synth || !window.SpeechSynthesisUtterance) {
+                if (status) status.textContent = '此瀏覽器暫不支援網頁朗讀功能。';
+                if (readBtn) readBtn.disabled = true;
+                return;
+            }
+
+            function setStatus(message) {
+                if (status) status.textContent = message || '';
+            }
+
+            function setControls(state) {
+                const reading = state === 'reading';
+                const paused = state === 'paused';
+                readBtn.disabled = reading;
+                pauseBtn.disabled = !reading;
+                resumeBtn.disabled = !paused;
+                stopBtn.disabled = !(reading || paused);
+            }
+
+            function getReadableText() {
+                if (!textPanel) return '';
+                const clone = textPanel.cloneNode(true);
+                clone.querySelectorAll('script, style, button, nav, .footnote-ref, .footnote-backref').forEach(el => el.remove());
+                return clone.textContent
+                    .replace(/\s+/g, ' ')
+                    .replace(/([。！？；：])\s*/g, '$1\n')
+                    .trim();
+            }
+
+            function splitText(text) {
+                const sentences = text
+                    .replace(/([。！？；：.!?])/g, '$1|')
+                    .split('|')
+                    .map(sentence => sentence.trim())
+                    .filter(Boolean);
+                const result = [];
+                let buffer = '';
+
+                sentences.forEach(sentence => {
+                    if ((buffer + sentence).length > 180 && buffer) {
+                        result.push(buffer.trim());
+                        buffer = sentence;
+                    } else {
+                        buffer += sentence;
+                    }
+                });
+
+                if (buffer.trim()) result.push(buffer.trim());
+                return result;
+            }
+
+            function getChineseVoice() {
+                const voices = synth.getVoices ? synth.getVoices() : [];
+                return voices.find(v => /zh[-_](TW|Hant|HK)/i.test(v.lang)) ||
+                    voices.find(v => /^zh/i.test(v.lang)) ||
+                    voices.find(v => /Chinese|Mandarin|中文|國語/i.test(v.name)) ||
+                    null;
+            }
+
+            function speakNext() {
+                if (!isReading || chunkIndex >= chunks.length) {
+                    stopReading('朗讀完成。');
+                    return;
+                }
+
+                currentUtterance = new SpeechSynthesisUtterance(chunks[chunkIndex]);
+                currentUtterance.lang = 'zh-TW';
+                currentUtterance.rate = 0.9;
+                currentUtterance.pitch = 1;
+
+                const voice = getChineseVoice();
+                if (voice) currentUtterance.voice = voice;
+
+                currentUtterance.onend = function () {
+                    chunkIndex += 1;
+                    speakNext();
+                };
+
+                currentUtterance.onerror = function () {
+                    stopReading('朗讀中斷，請再點一次「朗讀本頁」。');
+                };
+
+                setStatus('正在朗讀第 ' + (chunkIndex + 1) + ' 段，共 ' + chunks.length + ' 段。');
+                synth.speak(currentUtterance);
+            }
+
+            function startReading() {
+                const text = getReadableText();
+                if (!text) {
+                    setStatus('目前頁面還沒有可朗讀的正文。');
+                    return;
+                }
+
+                synth.cancel();
+                chunks = splitText(text);
+                chunkIndex = 0;
+                isReading = true;
+                setControls('reading');
+                speakNext();
+            }
+
+            function pauseReading() {
+                if (synth.speaking && !synth.paused) {
+                    synth.pause();
+                    setControls('paused');
+                    setStatus('已暫停朗讀。');
+                }
+            }
+
+            function resumeReading() {
+                if (synth.paused) {
+                    synth.resume();
+                    setControls('reading');
+                    setStatus('繼續朗讀。');
+                }
+            }
+
+            function stopReading(message) {
+                isReading = false;
+                synth.cancel();
+                currentUtterance = null;
+                setControls('idle');
+                setStatus(message || '已停止朗讀。');
+            }
+
+            readBtn.addEventListener('click', startReading);
+            pauseBtn.addEventListener('click', pauseReading);
+            resumeBtn.addEventListener('click', resumeReading);
+            stopBtn.addEventListener('click', () => stopReading('已停止朗讀。'));
+
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden && isReading) stopReading('已停止朗讀。');
+            });
+
+            const observer = new MutationObserver(function () {
+                if (isReading) stopReading('章節已切換，朗讀已停止。');
+            });
+
+            if (textPanel) {
+                observer.observe(textPanel, { childList: true, subtree: true, characterData: true });
+            }
+
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = function () {
+                    synth.getVoices();
+                };
+            }
+        })();
+    </script>
 </body>
 </html>
