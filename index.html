@@ -112,6 +112,50 @@
             font-size: 0.88rem;
             color: #8a7358;
         }
+
+        .chapter-tools {
+            margin: 10px 0 16px;
+            border: 1px solid rgba(122, 92, 58, 0.18);
+            border-radius: 14px;
+            background: rgba(250, 247, 240, 0.72);
+            overflow: hidden;
+        }
+
+        .chapter-tools-summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 12px 14px;
+            color: #6e4f2a;
+            font-size: 0.95rem;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .chapter-tools-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .chapter-tools-summary::before {
+            content: "▸";
+            display: inline-block;
+            margin-right: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .chapter-tools[open] .chapter-tools-summary::before {
+            transform: rotate(90deg);
+        }
+
+        .chapter-tools-hint {
+            margin-left: 8px;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: #8a7358;
+        }
+
+        .chapter-tools .chapters {
+            padding: 0 12px 12px;
+        }
     </style>
 </head>
 <body>
@@ -142,8 +186,13 @@
         </header>
 
         <main class="container">
-            <div class="chapter-label">選擇章節：</div>
-            <div class="chapters" id="chaptersList"></div>
+            <details class="chapter-tools" aria-label="選擇章節">
+                <summary class="chapter-tools-summary">
+                    選擇章節
+                    <span class="chapter-tools-hint">點開切換章節</span>
+                </summary>
+                <div class="chapters" id="chaptersList"></div>
+            </details>
 
             <div class="nav-tabs">
                 <button class="nav-tab active" data-tab="text" onclick="switchTab('text', event)">正文</button>
@@ -193,6 +242,21 @@
 
     <script src="assets/js/app.js"></script>
     <script>
+        (function () {
+            const chapterTools = document.querySelector('.chapter-tools');
+            const chaptersList = document.getElementById('chaptersList');
+
+            if (chapterTools && chaptersList) {
+                chaptersList.addEventListener('click', function (event) {
+                    const chapterControl = event.target.closest('button, a');
+                    if (!chapterControl) return;
+                    window.setTimeout(function () {
+                        chapterTools.removeAttribute('open');
+                    }, 200);
+                });
+            }
+        })();
+
         (function () {
             const synth = window.speechSynthesis;
             const readBtn = document.getElementById('readAloudBtn');
@@ -479,6 +543,7 @@
                     if (status && !isReading) setStatus(describeCurrentVoice() + ' 可以開始朗讀。');
                 };
             }
+
         })();
     </script>
 </body>
