@@ -13,14 +13,50 @@
         }
 
         .reader-tools {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
             margin: 18px 0 16px;
-            padding: 12px;
             border: 1px solid rgba(122, 92, 58, 0.18);
             border-radius: 14px;
             background: rgba(250, 247, 240, 0.72);
+            overflow: hidden;
+        }
+
+        .reader-tools-summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 12px 14px;
+            color: #6e4f2a;
+            font-size: 0.95rem;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .reader-tools-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .reader-tools-summary::before {
+            content: "▸";
+            display: inline-block;
+            margin-right: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .reader-tools[open] .reader-tools-summary::before {
+            transform: rotate(90deg);
+        }
+
+        .reader-tools-hint {
+            margin-left: 8px;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: #8a7358;
+        }
+
+        .reader-tools-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 12px 12px;
         }
 
         .reader-tools button {
@@ -114,17 +150,23 @@
                 <button class="nav-tab" data-tab="toc" onclick="switchTab('toc', event)">目錄</button>
             </div>
 
-            <div class="reader-tools" aria-label="朗讀工具">
-                <label class="voice-select-label" for="voiceSelect">聲音</label>
-                <select id="voiceSelect" class="voice-select" aria-label="選擇朗讀聲音">
-                    <option value="">自動選擇繁體中文聲音</option>
-                </select>
-                <button type="button" id="readAloudBtn">朗讀本頁</button>
-                <button type="button" id="pauseReadBtn" disabled>暫停</button>
-                <button type="button" id="resumeReadBtn" disabled>繼續</button>
-                <button type="button" id="stopReadBtn" disabled>停止</button>
-                <div class="reader-status" id="readerStatus" aria-live="polite">預設會自動選擇繁體中文聲音；也可以手動指定。</div>
-            </div>
+            <details class="reader-tools" aria-label="朗讀工具">
+                <summary class="reader-tools-summary">
+                    朗讀工具
+                    <span class="reader-tools-hint">點開選擇聲音與播放</span>
+                </summary>
+                <div class="reader-tools-body">
+                    <label class="voice-select-label" for="voiceSelect">聲音</label>
+                    <select id="voiceSelect" class="voice-select" aria-label="選擇朗讀聲音">
+                        <option value="">自動選擇繁體中文聲音</option>
+                    </select>
+                    <button type="button" id="readAloudBtn">朗讀本頁</button>
+                    <button type="button" id="pauseReadBtn" disabled>暫停</button>
+                    <button type="button" id="resumeReadBtn" disabled>繼續</button>
+                    <button type="button" id="stopReadBtn" disabled>停止</button>
+                    <div class="reader-status" id="readerStatus" aria-live="polite">預設會自動選擇繁體中文聲音；也可以手動指定。</div>
+                </div>
+            </details>
 
             <article id="textPanel" class="content-panel active"></article>
             <aside id="tocPanel" class="content-panel">
