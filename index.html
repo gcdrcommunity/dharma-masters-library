@@ -46,6 +46,30 @@
             cursor: not-allowed;
         }
 
+        .voice-select-label {
+            align-self: center;
+            font-size: 0.92rem;
+            color: #6e4f2a;
+            margin-left: 2px;
+        }
+
+        .voice-select {
+            min-width: min(100%, 260px);
+            max-width: 100%;
+            border: 1px solid rgba(122, 92, 58, 0.35);
+            border-radius: 999px;
+            background: #fffaf2;
+            color: #6e4f2a;
+            font-size: 0.92rem;
+            line-height: 1;
+            padding: 9px 32px 9px 12px;
+        }
+
+        .voice-select:focus-visible {
+            outline: 2px solid rgba(122, 92, 58, 0.32);
+            outline-offset: 2px;
+        }
+
         .reader-status {
             flex-basis: 100%;
             min-height: 1.4em;
@@ -91,11 +115,15 @@
             </div>
 
             <div class="reader-tools" aria-label="朗讀工具">
+                <label class="voice-select-label" for="voiceSelect">聲音</label>
+                <select id="voiceSelect" class="voice-select" aria-label="選擇朗讀聲音">
+                    <option value="">自動選擇繁體中文聲音</option>
+                </select>
                 <button type="button" id="readAloudBtn">朗讀本頁</button>
                 <button type="button" id="pauseReadBtn" disabled>暫停</button>
                 <button type="button" id="resumeReadBtn" disabled>繼續</button>
                 <button type="button" id="stopReadBtn" disabled>停止</button>
-                <div class="reader-status" id="readerStatus" aria-live="polite"></div>
+                <div class="reader-status" id="readerStatus" aria-live="polite">預設會自動選擇繁體中文聲音；也可以手動指定。</div>
             </div>
 
             <article id="textPanel" class="content-panel active"></article>
@@ -129,17 +157,21 @@
             const pauseBtn = document.getElementById('pauseReadBtn');
             const resumeBtn = document.getElementById('resumeReadBtn');
             const stopBtn = document.getElementById('stopReadBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
             const status = document.getElementById('readerStatus');
             const textPanel = document.getElementById('textPanel');
+            const VOICE_STORAGE_KEY = 'dml-reader-voice';
 
             let chunks = [];
             let chunkIndex = 0;
             let currentUtterance = null;
             let isReading = false;
+            let voices = [];
 
             if (!synth || !window.SpeechSynthesisUtterance) {
                 if (status) status.textContent = '此瀏覽器暫不支援網頁朗讀功能。';
                 if (readBtn) readBtn.disabled = true;
+                if (voiceSelect) voiceSelect.disabled = true;
                 return;
             }
 
@@ -188,12 +220,103 @@
                 return result;
             }
 
-            function getChineseVoice() {
-                const voices = synth.getVoices ? synth.getVoices() : [];
-                return voices.find(v => /zh[-_](TW|Hant|HK)/i.test(v.lang)) ||
-                    voices.find(v => /^zh/i.test(v.lang)) ||
-                    voices.find(v => /Chinese|Mandarin|中文|國語/i.test(v.name)) ||
-                    null;
+            function voiceLabel(voice) {
+                if (!voice) return '瀏覽器預設聲音';
+                return voice.name + (voice.lang ? '（' + voice.lang + '）' : '');
+            }
+
+            function isChineseVoice(voice) {
+                const text = ((voice && voice.name) || '') + ' ' + ((voice && voice.lang) || '');
+                return /zh[-_]/i.test(text) || /Chinese|Mandarin|中文|國語|美佳|Mei[-\s]?Jia/i.test(text);
+            }
+
+            function scoreVoice(voice) {
+                const name = (voice.name || '').toLowerCase();
+                const lang = (voice.lang || '').toLowerCase();
+                let score = 0;
+
+                if (/zh[-_]?tw/i.test(lang) || /zh[-_]?hant/i.test(lang)) score += 120;
+                else if (/zh[-_]?(hk|mo)/i.test(lang)) score += 95;
+                else if (/^zh/i.test(lang)) score += 70;
+
+                if (/mei[-\s]?jia|美佳/i.test(voice.name)) score += 90;
+                if (/google/i.test(name) && /^zh/i.test(lang)) score += 45;
+                if (/premium|enhanced|高品質|進階|siri/i.test(name)) score += 30;
+                if (/taiwan|臺灣|台灣|traditional|繁體/i.test(name + ' ' + lang)) score += 25;
+                if (/chinese|mandarin|中文|國語/i.test(voice.name)) score += 15;
+
+                return score;
+            }
+
+            function getBestChineseVoice() {
+                const chineseVoices = voices.filter(isChineseVoice);
+                if (!chineseVoices.length) return null;
+                return chineseVoices.sort((a, b) => scoreVoice(b) - scoreVoice(a))[0];
+            }
+
+            function getSelectedVoice() {
+                if (voiceSelect && voiceSelect.value) {
+                    const selected = voices.find(voice => voice.name + '|' + voice.lang === voiceSelect.value);
+                    if (selected) return selected;
+                }
+                return getBestChineseVoice();
+            }
+
+            function populateVoiceSelect() {
+                voices = synth.getVoices ? synth.getVoices() : [];
+                if (!voiceSelect) return;
+
+                const savedVoice = localStorage.getItem(VOICE_STORAGE_KEY) || '';
+                const selectedValue = voiceSelect.value || savedVoice;
+
+                voiceSelect.innerHTML = '';
+
+                const autoOption = document.createElement('option');
+                autoOption.value = '';
+                autoOption.textContent = '自動選擇繁體中文聲音';
+                voiceSelect.appendChild(autoOption);
+
+                if (!voices.length) {
+                    const loadingOption = document.createElement('option');
+                    loadingOption.value = '__loading';
+                    loadingOption.textContent = '聲音載入中，請稍候';
+                    loadingOption.disabled = true;
+                    voiceSelect.appendChild(loadingOption);
+                    voiceSelect.value = '';
+                    return;
+                }
+
+                const sortedVoices = voices
+                    .slice()
+                    .sort((a, b) => {
+                        const chineseDiff = Number(isChineseVoice(b)) - Number(isChineseVoice(a));
+                        if (chineseDiff) return chineseDiff;
+                        return scoreVoice(b) - scoreVoice(a) || voiceLabel(a).localeCompare(voiceLabel(b));
+                    });
+
+                sortedVoices.forEach(voice => {
+                    const option = document.createElement('option');
+                    option.value = voice.name + '|' + voice.lang;
+                    option.textContent = voiceLabel(voice);
+                    voiceSelect.appendChild(option);
+                });
+
+                if (selectedValue && sortedVoices.some(voice => voice.name + '|' + voice.lang === selectedValue)) {
+                    voiceSelect.value = selectedValue;
+                } else {
+                    voiceSelect.value = '';
+                }
+            }
+
+            function describeCurrentVoice() {
+                const selected = getSelectedVoice();
+                if (voiceSelect && voiceSelect.value && selected) {
+                    return '已選擇：' + voiceLabel(selected);
+                }
+                if (selected) {
+                    return '自動選擇：' + voiceLabel(selected);
+                }
+                return '使用瀏覽器預設聲音。';
             }
 
             function speakNext() {
@@ -207,23 +330,29 @@
                 currentUtterance.rate = 0.9;
                 currentUtterance.pitch = 1;
 
-                const voice = getChineseVoice();
-                if (voice) currentUtterance.voice = voice;
+                const voice = getSelectedVoice();
+                if (voice) {
+                    currentUtterance.voice = voice;
+                    currentUtterance.lang = voice.lang || 'zh-TW';
+                }
 
                 currentUtterance.onend = function () {
+                    if (!isReading) return;
                     chunkIndex += 1;
                     speakNext();
                 };
 
                 currentUtterance.onerror = function () {
+                    if (!isReading) return;
                     stopReading('朗讀中斷，請再點一次「朗讀本頁」。');
                 };
 
-                setStatus('正在朗讀第 ' + (chunkIndex + 1) + ' 段，共 ' + chunks.length + ' 段。');
+                setStatus(describeCurrentVoice() + ' 正在朗讀第 ' + (chunkIndex + 1) + ' 段，共 ' + chunks.length + ' 段。');
                 synth.speak(currentUtterance);
             }
 
             function startReading() {
+                populateVoiceSelect();
                 const text = getReadableText();
                 if (!text) {
                     setStatus('目前頁面還沒有可朗讀的正文。');
@@ -262,6 +391,22 @@
                 setStatus(message || '已停止朗讀。');
             }
 
+            if (voiceSelect) {
+                voiceSelect.addEventListener('change', function () {
+                    if (voiceSelect.value) {
+                        localStorage.setItem(VOICE_STORAGE_KEY, voiceSelect.value);
+                        setStatus(describeCurrentVoice());
+                    } else {
+                        localStorage.removeItem(VOICE_STORAGE_KEY);
+                        setStatus(describeCurrentVoice());
+                    }
+
+                    if (isReading) {
+                        stopReading('聲音設定已變更，請重新點「朗讀本頁」。');
+                    }
+                });
+            }
+
             readBtn.addEventListener('click', startReading);
             pauseBtn.addEventListener('click', pauseReading);
             resumeBtn.addEventListener('click', resumeReading);
@@ -279,9 +424,17 @@
                 observer.observe(textPanel, { childList: true, subtree: true, characterData: true });
             }
 
+            populateVoiceSelect();
+            setTimeout(populateVoiceSelect, 250);
+            setTimeout(function () {
+                populateVoiceSelect();
+                if (status && !isReading) setStatus(describeCurrentVoice() + ' 可以開始朗讀。');
+            }, 1000);
+
             if (synth.onvoiceschanged !== undefined) {
                 synth.onvoiceschanged = function () {
-                    synth.getVoices();
+                    populateVoiceSelect();
+                    if (status && !isReading) setStatus(describeCurrentVoice() + ' 可以開始朗讀。');
                 };
             }
         })();
