@@ -2,6 +2,8 @@
   "jewel-ornament-of-liberation": {
     "title": "《解脫莊嚴寶論》科判總覽",
     "intro": "全書依「因、所依、緣、方便、果、事業」六義開展。點三角形▾展開／收合，點有「第N章」標記者跳讀該章。",
+    "pdf": "kepan-outline.pdf",
+    "printPage": "kepan-print.html",
     "nodes": [
       { "label": "甲一", "title": "序分：皈敬與造論之志", "ch": 1, "children": [
         { "label": "", "title": "敬禮聖文殊師利童子", "ch": 1 },

@@ -332,6 +332,29 @@ h3 { font-size: 1.2em; color: var(--secondary); margin-top: 1em; }
     padding-bottom: 0.8em;
     border-bottom: 1px dashed var(--border);
 }
+.kepan-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    margin: 0 0 1.2em;
+}
+.kepan-dl {
+    display: inline-block;
+    font-size: 0.88em;
+    text-decoration: none;
+    color: #FFFFFF;
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    padding: 0.45em 0.9em;
+    transition: opacity 0.15s;
+}
+.kepan-dl:hover { opacity: 0.88; }
+.kepan-dl-alt {
+    color: var(--primary);
+    background: var(--bg);
+}
+
 .kepan-level { display: flex; flex-direction: column; gap: 0.4em; }
 .kepan-node.kepan-branch { display: flex; flex-direction: column; }
 .kepan-row { display: flex; align-items: stretch; gap: 0.2em; }

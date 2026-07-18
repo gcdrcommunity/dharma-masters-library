@@ -234,6 +234,12 @@ function renderKepanTree(kp, container) {
     let html = '';
     if (kp.title) html += `<div class="kepan-title">${escapeHtml(kp.title)}</div>`;
     if (kp.intro) html += `<div class="kepan-intro">${escapeHtml(kp.intro)}</div>`;
+    if (kp.pdf || kp.printPage) {
+        html += '<div class="kepan-downloads">';
+        if (kp.pdf) html += `<a class="kepan-dl" href="${encodeURI(kp.pdf)}" download="解脫莊嚴寶論-科判總覽.pdf">⬇ 下載完整科判總覽（PDF）</a>`;
+        if (kp.printPage) html += `<a class="kepan-dl kepan-dl-alt" href="${encodeURI(kp.printPage)}" target="_blank" rel="noopener">🖨 可列印版</a>`;
+        html += '</div>';
+    }
     html += kepanNodesHtml(kp.nodes, 0);
     container.innerHTML = html;
 
