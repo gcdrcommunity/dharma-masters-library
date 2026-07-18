@@ -33,8 +33,41 @@ function markdownToHtml(md) {
     const out = [];
     let para = [];
     let quote = [];
+    let carry = 0;        // 未閉合的「數：讓跨段落（分行）的偈頌／經證整段延續為引用
+    let carryBlocks = 0;  // 已延續段數，安全上限用
 
-    const flushPara = () => { if (para.length) { out.push(`<p>${para.join('<br>')}</p>`); para = []; } };
+    const flushPara = () => {
+        if (!para.length) return;
+        const body = para.join('<br>');
+        const joined = para.join('');
+        const opens = (joined.match(/「/g) || []).length;
+        const closes = (joined.match(/」/g) || []).length;
+
+        // 判定是否為「經證／偈頌引用」
+        let cite = carry > 0; // 延續上一段未閉合的引用
+        if (!cite) {
+            const t = para[0];
+            if (/^(《|頌曰|偈曰|讚曰|經云|經曰|論曰|論云|又云|又曰|又頌|如經|如頌|如云|經中|論中)/.test(t)) {
+                cite = true; // 明確引詞起始
+            } else if (t.charAt(0) === '「') {
+                // 以引號起始：須整段以」收尾（純引句）或引號未閉合（偈頌續行）；
+                // 排除「開頭引個詞、後接散文」（如「『無始輪迴』一詞…」「『供養』是說…」）
+                const termExplain = /^「[^」]{1,12}」(是說|是指|一詞|意謂|意思是|係指)/.test(t);
+                cite = !termExplain && (joined.replace(/\s/g, '').endsWith('」') || opens > closes);
+            }
+        }
+
+        if (cite) {
+            out.push(`<blockquote class="scripture">${body}</blockquote>`);
+            carry = Math.max(0, carry + opens - closes);
+            carryBlocks = carry > 0 ? carryBlocks + 1 : 0;
+            if (carryBlocks > 12) { carry = 0; carryBlocks = 0; } // 來源缺「」時的失控保護
+        } else {
+            out.push(`<p>${body}</p>`);
+            carry = 0; carryBlocks = 0;
+        }
+        para = [];
+    };
     const flushQuote = () => { if (quote.length) { out.push(`<blockquote>${quote.join('<br>')}</blockquote>`); quote = []; } };
     const flushAll = () => { flushQuote(); flushPara(); };
 
@@ -45,6 +78,7 @@ function markdownToHtml(md) {
         const heading = line.match(/^(#{1,6})\s+(.*)$/);
         if (heading) {
             flushAll();
+            carry = 0; carryBlocks = 0; // 新標題起段，不延續引用
             const level = Math.min(heading[1].length + 1, 6); // # → h2, ## → h3, ### → h4, #### → h5 …
             out.push(`<h${level}>${escapeHtml(heading[2].trim())}</h${level}>`);
             continue;
@@ -53,6 +87,7 @@ function markdownToHtml(md) {
         const bq = line.match(/^>\s?(.*)$/);
         if (bq) {
             flushPara();
+            carry = 0; carryBlocks = 0;
             quote.push(escapeHtml(bq[1]));
             continue;
         }
