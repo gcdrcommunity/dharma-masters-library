@@ -1,0 +1,229 @@
+{
+  "jewel-ornament-of-liberation": {
+    "title": "《解脫莊嚴寶論》科判總覽",
+    "intro": "全書依「因、所依、緣、方便、果、事業」六義開展。點三角形▾展開／收合，點有「第N章」標記者跳讀該章。",
+    "nodes": [
+      { "label": "甲一", "title": "序分：皈敬與造論之志", "ch": 1, "children": [
+        { "label": "", "title": "敬禮聖文殊師利童子", "ch": 1 },
+        { "label": "", "title": "皈敬頌：禮讚佛、佛子、正法及根本上師，依米拉恩德為自他二利而造論", "ch": 1 },
+        { "label": "", "title": "總說輪迴涅槃之性、相、義，勸發爭取無上菩提之心", "ch": 1 }
+      ]},
+      { "label": "甲二", "title": "立宗：總標六大綱要（六義）", "ch": 1, "children": [
+        { "label": "因", "title": "如來藏", "ch": 1 },
+        { "label": "所依", "title": "人身寶", "ch": 2 },
+        { "label": "緣", "title": "善知識", "ch": 3 },
+        { "label": "方便", "title": "善知識之口授", "ch": 4 },
+        { "label": "果", "title": "三身佛位", "ch": 20 },
+        { "label": "事業", "title": "無分別利生", "ch": 21 }
+      ]},
+      { "label": "甲三", "title": "正宗分：依六義正釋論義", "children": [
+
+        { "label": "乙一", "title": "成佛之因——如來藏", "ch": 1, "children": [
+          { "label": "丙一", "title": "眾生皆具如來藏之三理", "ch": 1, "children": [
+            { "label": "丁一", "title": "法身空性遍滿一切眾生", "ch": 1 },
+            { "label": "丁二", "title": "真如無有差別", "ch": 1 },
+            { "label": "丁三", "title": "一切眾生皆具佛種性", "ch": 1 }
+          ]},
+          { "label": "丙二", "title": "五種種性", "ch": 1, "children": [
+            { "label": "丁一", "title": "斷滅種性", "ch": 1 },
+            { "label": "丁二", "title": "不定種性", "ch": 1 },
+            { "label": "丁三", "title": "聲聞種性", "ch": 1 },
+            { "label": "丁四", "title": "緣覺種性", "ch": 1 },
+            { "label": "丁五", "title": "大乘種性", "ch": 1, "children": [
+              { "label": "戊一", "title": "根別", "ch": 1 },
+              { "label": "戊二", "title": "體性〔本譯本六門實說五門，未別立此段〕", "ch": 1 },
+              { "label": "戊三", "title": "名稱", "ch": 1 },
+              { "label": "戊四", "title": "超勝二乘之因", "ch": 1 },
+              { "label": "戊五", "title": "表相", "ch": 1 },
+              { "label": "戊六", "title": "徵兆", "ch": 1 }
+            ]}
+          ]}
+        ]},
+
+        { "label": "乙二", "title": "成佛之所依——人身寶", "ch": 2, "children": [
+          { "label": "丙一", "title": "有暇——遠離八無暇", "ch": 2 },
+          { "label": "丙二", "title": "圓滿", "ch": 2, "children": [
+            { "label": "丁一", "title": "自圓滿五", "ch": 2 },
+            { "label": "丁二", "title": "他圓滿五", "ch": 2 }
+          ]},
+          { "label": "丙三", "title": "三種信心", "ch": 2 },
+          { "label": "丙四", "title": "人身寶之難得與大義", "ch": 2 }
+        ]},
+
+        { "label": "乙三", "title": "成佛之緣——善知識", "ch": 3, "children": [
+          { "label": "丙一", "title": "必須依止善知識之理由", "ch": 3 },
+          { "label": "丙二", "title": "善知識之分類", "ch": 3 },
+          { "label": "丙三", "title": "各各之性相", "ch": 3 },
+          { "label": "丙四", "title": "依止之方便", "ch": 3 },
+          { "label": "丙五", "title": "依止之利益", "ch": 3 }
+        ]},
+
+        { "label": "乙四", "title": "成佛之方便——善知識之口授", "children": [
+          { "label": "丙一", "title": "總說四障與四種口訣", "ch": 4, "children": [
+            { "label": "丁一", "title": "成佛之四種障礙", "ch": 4 },
+            { "label": "丁二", "title": "對治之四種口訣", "ch": 4 }
+          ]},
+          { "label": "丙二", "title": "對治貪著現世——觀無常", "ch": 4, "children": [
+            { "label": "丁一", "title": "無常之差別", "ch": 4 },
+            { "label": "丁二", "title": "觀修之方法", "ch": 4, "children": [
+              { "label": "戊一", "title": "思惟決定死之三理", "ch": 4 },
+              { "label": "戊二", "title": "觀死相三喻", "ch": 4 },
+              { "label": "戊三", "title": "思惟死期無定之三因", "ch": 4 },
+              { "label": "戊四", "title": "思惟死時無助之三事", "ch": 4 }
+            ]},
+            { "label": "丁三", "title": "修無常觀之利益", "ch": 4 }
+          ]},
+          { "label": "丙三", "title": "對治貪著諸有欲樂——觀輪迴苦與業果", "children": [
+            { "label": "丁一", "title": "觀輪迴之苦痛", "ch": 5, "children": [
+              { "label": "戊一", "title": "總說三苦", "ch": 5 },
+              { "label": "戊二", "title": "別說六道之苦", "ch": 5, "children": [
+                { "label": "己一", "title": "地獄苦", "ch": 5 },
+                { "label": "己二", "title": "餓鬼苦", "ch": 5 },
+                { "label": "己三", "title": "畜生苦", "ch": 5 },
+                { "label": "己四", "title": "人道八苦", "ch": 5 },
+                { "label": "己五", "title": "阿修羅苦", "ch": 5 },
+                { "label": "己六", "title": "天道苦", "ch": 5 }
+              ]}
+            ]},
+            { "label": "丁二", "title": "觀業果", "ch": 6, "children": [
+              { "label": "戊一", "title": "業之差別", "ch": 6, "children": [
+                { "label": "己一", "title": "非福業（十不善業）", "ch": 6 },
+                { "label": "己二", "title": "福業（十善業）", "ch": 6 },
+                { "label": "己三", "title": "不動業（諸禪定業）", "ch": 6 }
+              ]},
+              { "label": "戊二", "title": "業之性相〔正文未別立標題〕", "ch": 6 },
+              { "label": "戊三", "title": "自作自受", "ch": 6 },
+              { "label": "戊四", "title": "同類受報，善惡無亂", "ch": 6 },
+              { "label": "戊五", "title": "小業得大果", "ch": 6 },
+              { "label": "戊六", "title": "業果必不壞失", "ch": 6 }
+            ]}
+          ]},
+          { "label": "丙四", "title": "對治貪著寂滅之樂——修慈悲", "ch": 7, "children": [
+            { "label": "丁一", "title": "慈心（生緣、法緣、無緣）", "ch": 7 },
+            { "label": "丁二", "title": "悲心（生緣、法緣、無緣）", "ch": 7 }
+          ]},
+          { "label": "丙五", "title": "對治不知成佛之方便——發菩提心", "children": [
+            { "label": "丁一", "title": "發心之基礎（第八章 皈依與淨戒）", "ch": 8, "children": [
+              { "label": "戊一", "title": "具足大乘種性", "ch": 8 },
+              { "label": "戊二", "title": "皈依三寶", "ch": 8 },
+              { "label": "戊三", "title": "得七眾別解脫戒之一", "ch": 8 }
+            ]},
+            { "label": "丁二", "title": "論發菩提心：體性乃至對治（第九章）", "ch": 9, "children": [
+              { "label": "戊一", "title": "體性", "ch": 9 },
+              { "label": "戊二", "title": "差別", "ch": 9, "children": [
+                { "label": "己一", "title": "勝義菩提心〔併於「差別」段〕", "ch": 9 },
+                { "label": "己二", "title": "世俗菩提心（願、行）〔併於「差別」段〕", "ch": 9 }
+              ]},
+              { "label": "戊三", "title": "所緣", "ch": 9 },
+              { "label": "戊四", "title": "因", "ch": 9 },
+              { "label": "戊五", "title": "受法", "ch": 9 },
+              { "label": "戊六", "title": "儀軌", "ch": 9, "children": [
+                { "label": "己一", "title": "前行儀軌（六項）", "ch": 9 },
+                { "label": "己二", "title": "正行儀軌", "ch": 9 },
+                { "label": "己三", "title": "結行儀軌", "ch": 9 }
+              ]},
+              { "label": "戊七", "title": "發心之功德", "ch": 9 },
+              { "label": "戊八", "title": "過失、喪失及其對治", "ch": 9 }
+            ]},
+            { "label": "丁三", "title": "發心之學處（第十至十七章）", "children": [
+              { "label": "戊一", "title": "願菩提心之學處（第十章）", "ch": 10, "children": [
+                { "label": "己一", "title": "心不捨離眾生", "ch": 10 },
+                { "label": "己二", "title": "常思菩提心之功德", "ch": 10 },
+                { "label": "己三", "title": "精勤集聚福慧二資糧", "ch": 10 },
+                { "label": "己四", "title": "時時修觀菩提心", "ch": 10 },
+                { "label": "己五", "title": "於善惡八法知所取捨", "ch": 10 }
+              ]},
+              { "label": "戊二", "title": "行菩提心之學處——六波羅蜜多", "children": [
+                { "label": "己一", "title": "總說六波羅蜜多（第十一章）", "ch": 11 },
+                { "label": "己二", "title": "布施波羅蜜多（第十二章）", "ch": 12, "children": [
+                  { "label": "庚一", "title": "財施", "ch": 12 },
+                  { "label": "庚二", "title": "無畏施", "ch": 12 },
+                  { "label": "庚三", "title": "法施", "ch": 12 }
+                ]},
+                { "label": "己三", "title": "持戒波羅蜜多（第十三章）", "ch": 13, "children": [
+                  { "label": "庚一", "title": "律儀戒", "ch": 13 },
+                  { "label": "庚二", "title": "攝善法戒", "ch": 13 },
+                  { "label": "庚三", "title": "饒益有情戒", "ch": 13 }
+                ]},
+                { "label": "己四", "title": "忍辱波羅蜜多（第十四章）", "ch": 14, "children": [
+                  { "label": "庚一", "title": "耐怨害忍", "ch": 14 },
+                  { "label": "庚二", "title": "安受苦忍", "ch": 14 },
+                  { "label": "庚三", "title": "諦察法忍", "ch": 14 }
+                ]},
+                { "label": "己五", "title": "精進波羅蜜多（第十五章）", "ch": 15, "children": [
+                  { "label": "庚一", "title": "披甲精進", "ch": 15 },
+                  { "label": "庚二", "title": "攝善精進", "ch": 15 },
+                  { "label": "庚三", "title": "無厭足精進", "ch": 15 }
+                ]},
+                { "label": "己六", "title": "禪定波羅蜜多（第十六章）", "ch": 16 },
+                { "label": "己七", "title": "般若波羅蜜多（第十七章）", "ch": 17, "children": [
+                  { "label": "庚一", "title": "了知之法", "ch": 17, "children": [
+                    { "label": "辛一", "title": "破執諸法實有（破我執、破法執）", "ch": 17 },
+                    { "label": "辛二", "title": "破執諸法實無", "ch": 17 },
+                    { "label": "辛三", "title": "執空之過患", "ch": 17 },
+                    { "label": "辛四", "title": "有無俱執之過患", "ch": 17 },
+                    { "label": "辛五", "title": "論解脫之道", "ch": 17 },
+                    { "label": "辛六", "title": "明解脫之自性即涅槃自性", "ch": 17 }
+                  ]},
+                  { "label": "庚二", "title": "修行之法（止觀雙運）", "ch": 17 }
+                ]}
+              ]}
+            ]},
+            { "label": "丁四", "title": "修道之階次（第十八章）", "ch": 18, "children": [
+              { "label": "戊一", "title": "資糧道", "ch": 18 },
+              { "label": "戊二", "title": "加行道", "ch": 18 },
+              { "label": "戊三", "title": "見道", "ch": 18 },
+              { "label": "戊四", "title": "修道", "ch": 18 },
+              { "label": "戊五", "title": "究竟道", "ch": 18 }
+            ]},
+            { "label": "丁五", "title": "菩薩地道（第十九章）", "ch": 19, "children": [
+              { "label": "戊一", "title": "初修學地", "ch": 19 },
+              { "label": "戊二", "title": "誠信篤行地", "ch": 19 },
+              { "label": "戊三", "title": "菩薩十地", "ch": 19, "children": [
+                { "label": "己一", "title": "歡喜地", "ch": 19 },
+                { "label": "己二", "title": "離垢地", "ch": 19 },
+                { "label": "己三", "title": "發光地", "ch": 19 },
+                { "label": "己四", "title": "焰慧地", "ch": 19 },
+                { "label": "己五", "title": "難勝地", "ch": 19 },
+                { "label": "己六", "title": "現前地", "ch": 19 },
+                { "label": "己七", "title": "遠行地", "ch": 19 },
+                { "label": "己八", "title": "不動地", "ch": 19 },
+                { "label": "己九", "title": "善慧地", "ch": 19 },
+                { "label": "己十", "title": "法雲地", "ch": 19 }
+              ]},
+              { "label": "戊四", "title": "佛地", "ch": 19 }
+            ]}
+          ]}
+        ]},
+
+        { "label": "乙五", "title": "成佛之果——圓滿佛果", "ch": 20, "children": [
+          { "label": "丙一", "title": "自性（斷除圓成、覺智圓成）", "ch": 20 },
+          { "label": "丙二", "title": "名義", "ch": 20 },
+          { "label": "丙三", "title": "類別——三身", "ch": 20, "children": [
+            { "label": "丁一", "title": "法身", "ch": 20 },
+            { "label": "丁二", "title": "報身", "ch": 20 },
+            { "label": "丁三", "title": "化身", "ch": 20 }
+          ]},
+          { "label": "丙四", "title": "定義〔正文未別立標題〕", "ch": 20 },
+          { "label": "丙五", "title": "數量決定為三之理", "ch": 20 },
+          { "label": "丙六", "title": "性相〔併於前節〕", "ch": 20 },
+          { "label": "丙七", "title": "不共特徵", "ch": 20 }
+        ]},
+
+        { "label": "乙六", "title": "佛之事業", "ch": 21, "children": [
+          { "label": "丙一", "title": "佛雖無念，任運成辦利生事業", "ch": 21 },
+          { "label": "丙二", "title": "依《寶性論》九喻別釋（正文詳說前六喻）", "ch": 21, "children": [
+            { "label": "丁一", "title": "如帝釋天之影像", "ch": 21 },
+            { "label": "丁二", "title": "如天鼓", "ch": 21 },
+            { "label": "丁三", "title": "如雲聚", "ch": 21 },
+            { "label": "丁四", "title": "如梵天", "ch": 21 },
+            { "label": "丁五", "title": "如日輪", "ch": 21 },
+            { "label": "丁六", "title": "如如意寶珠", "ch": 21 },
+            { "label": "", "title": "其餘諸喻（如空谷響、大地、虛空等）——正文於結尾合併帶過，未逐一開演", "ch": 21 }
+          ]}
+        ]}
+      ]},
+      { "label": "甲四", "title": "流通分：結頌與願文", "ch": 21 }
+    ]
+  }
+}

@@ -220,10 +220,13 @@ h3 { font-size: 1.2em; color: var(--secondary); margin-top: 1em; }
 
 .content-panel h2,
 .content-panel h3,
-.content-panel h4 {
+.content-panel h4,
+.content-panel h5,
+.content-panel h6 {
     text-indent: 0;
     margin-top: 2em;
     margin-bottom: 1em;
+    scroll-margin-top: 1em;
 }
 
 .content-panel h2 {
@@ -235,6 +238,8 @@ h3 { font-size: 1.2em; color: var(--secondary); margin-top: 1em; }
 
 .content-panel h3 { font-size: 1.2em; color: var(--secondary); }
 .content-panel h4 { font-size: 1.05em; color: var(--secondary); }
+.content-panel h5 { font-size: 1em; color: var(--secondary); font-weight: 600; }
+.content-panel h6 { font-size: 0.95em; color: var(--secondary); font-weight: 600; }
 
 .footnote-btn {
     cursor: pointer;
@@ -310,6 +315,123 @@ h3 { font-size: 1.2em; color: var(--secondary); margin-top: 1em; }
 
 .toc-item:hover { background: rgba(166, 133, 102, 0.08); }
 .toc-item.active { color: var(--accent); font-weight: 600; }
+
+/* ── 科判區塊圖（目錄分頁） ── */
+.kepan-root { list-style: none; padding: 0.2em 0; }
+.kepan-title {
+    font-size: 1.15em;
+    color: var(--primary);
+    font-weight: 700;
+    margin: 0.2em 0 0.4em;
+}
+.kepan-intro {
+    font-size: 0.85em;
+    color: var(--secondary);
+    line-height: 1.6;
+    margin-bottom: 1em;
+    padding-bottom: 0.8em;
+    border-bottom: 1px dashed var(--border);
+}
+.kepan-level { display: flex; flex-direction: column; gap: 0.4em; }
+.kepan-node.kepan-branch { display: flex; flex-direction: column; }
+.kepan-row { display: flex; align-items: stretch; gap: 0.2em; }
+.kepan-row-leaf { padding-left: 1.7em; }
+.kepan-row .kepan-item { flex: 1 1 auto; }
+
+/* 子節點容器：縮排 + 連接線；收合時隱藏 */
+.kepan-children {
+    margin: 0.4em 0 0.1em 0.7em;
+    padding-left: 0.7em;
+    border-left: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}
+.kepan-branch.collapsed > .kepan-children { display: none; }
+
+/* 三角形展開／收合按鈕 */
+.kepan-toggle {
+    flex: 0 0 auto;
+    width: 1.5em;
+    align-self: stretch;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    font-size: 0.85em;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s;
+}
+.kepan-toggle:hover { color: var(--primary); }
+.kepan-branch.collapsed > .kepan-row > .kepan-toggle { transform: rotate(-90deg); }
+
+.kepan-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    width: 100%;
+    text-align: left;
+    padding: 0.5em 0.7em;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.92em;
+    line-height: 1.5;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+button.kepan-item:hover {
+    background: var(--light-bg);
+    border-color: var(--accent);
+    box-shadow: 0 1px 4px rgba(125, 74, 74, 0.1);
+}
+.kepan-item.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+}
+.kepan-item.active .kepan-label { background: rgba(255, 255, 255, 0.22); color: #FFFFFF; }
+.kepan-item.active .kepan-ch { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.5); }
+
+.kepan-item.kepan-group {
+    cursor: default;
+    background: var(--light-bg);
+    border-style: dashed;
+    font-weight: 600;
+    color: var(--primary);
+}
+.kepan-head { font-weight: 600; }
+
+.kepan-label {
+    flex: 0 0 auto;
+    min-width: 2.8em;
+    text-align: center;
+    font-size: 0.82em;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--light-bg);
+    border-radius: 5px;
+    padding: 0.1em 0.4em;
+}
+.kepan-group .kepan-label { background: rgba(125, 74, 74, 0.1); }
+.kepan-text { flex: 1 1 auto; }
+.kepan-ch {
+    flex: 0 0 auto;
+    font-size: 0.75em;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.4em;
+    white-space: nowrap;
+}
 
 .loading,
 .error {

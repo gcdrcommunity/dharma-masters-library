@@ -1,5 +1,6 @@
 let catalog = null;
 let footnotes = {};
+let kepan = {};
 let currentWorkSlug = null;
 let currentChapter = 0;
 let currentFootnotes = {};
@@ -26,20 +27,42 @@ function escapeHtml(text) {
 }
 
 function markdownToHtml(md) {
-    const blocks = md.replace(/\r\n/g, '\n').split(/\n{2,}/);
-    let html = blocks.map(block => {
-        const raw = block.trim();
-        if (!raw) return '';
-        const safe = escapeHtml(raw);
+    // 逐行解析：標題(#~######)一律獨立成行、不會吸走下一行內文；
+    // 連續的一般行併為同一段(以 <br> 分行)，連續的 > 行併為同一 blockquote，空行分隔區塊。
+    const lines = md.replace(/\r\n/g, '\n').split('\n');
+    const out = [];
+    let para = [];
+    let quote = [];
 
-        if (/^###\s+/.test(raw)) return `<h4>${safe.replace(/^###\s+/, '')}</h4>`;
-        if (/^##\s+/.test(raw)) return `<h3>${safe.replace(/^##\s+/, '')}</h3>`;
-        if (/^#\s+/.test(raw)) return `<h2>${safe.replace(/^#\s+/, '')}</h2>`;
-        if (/^&gt;\s+/.test(safe)) return `<blockquote>${safe.replace(/^&gt;\s+/, '').replace(/\n&gt;\s+/g, '<br>')}</blockquote>`;
+    const flushPara = () => { if (para.length) { out.push(`<p>${para.join('<br>')}</p>`); para = []; } };
+    const flushQuote = () => { if (quote.length) { out.push(`<blockquote>${quote.join('<br>')}</blockquote>`); quote = []; } };
+    const flushAll = () => { flushQuote(); flushPara(); };
 
-        return `<p>${safe.replace(/\n/g, '<br>')}</p>`;
-    }).join('');
+    for (const rawLine of lines) {
+        const line = rawLine.trim();
+        if (!line) { flushAll(); continue; }
 
+        const heading = line.match(/^(#{1,6})\s+(.*)$/);
+        if (heading) {
+            flushAll();
+            const level = Math.min(heading[1].length + 1, 6); // # → h2, ## → h3, ### → h4, #### → h5 …
+            out.push(`<h${level}>${escapeHtml(heading[2].trim())}</h${level}>`);
+            continue;
+        }
+
+        const bq = line.match(/^>\s?(.*)$/);
+        if (bq) {
+            flushPara();
+            quote.push(escapeHtml(bq[1]));
+            continue;
+        }
+
+        flushQuote();
+        para.push(escapeHtml(line));
+    }
+    flushAll();
+
+    let html = out.join('');
     html = html.replace(/［(\d+)］/g, (match, num) => {
         return `<span class="footnote-btn" onclick="showNote('${num}')">[${num}]</span>`;
     });
@@ -128,7 +151,24 @@ async function showReader(updateHash = false) {
     await showChapter(currentChapter, updateHash);
 }
 
-async function showChapter(index, updateHash = false) {
+// 在正文面板中尋找與科判節點對應的標題元素（依「標號＋標題前幾字」比對，避免同章重複標號誤配）
+function findHeadingEl(panel, label, title) {
+    if (!label) return null;
+    const strip = s => (s || '').replace(/[\s、，。：；（）()〔〕【】《》「」——\-…·～]/g, '');
+    const L = strip(label);
+    const T = strip(title).replace(/[〔（(].*$/, '').replace(/第[一二三四五六七八九十百]+章.*$/, '');
+    const heads = [...panel.querySelectorAll('h2, h3, h4, h5, h6')];
+    return heads.find(h => {
+        const x = strip(h.textContent);
+        if (!x.startsWith(L)) return false;
+        if (!T) return true;
+        const rest = x.slice(L.length);
+        const n = Math.min(rest.length, T.length, 3);
+        return n > 0 && rest.slice(0, n) === T.slice(0, n);
+    }) || null;
+}
+
+async function showChapter(index, updateHash = false, scrollTarget = null) {
     const work = getWork(currentWorkSlug);
     currentChapter = index;
     const chapter = work.chapters[index];
@@ -149,8 +189,15 @@ async function showChapter(index, updateHash = false) {
     try {
         const text = await loadText(chapter.path);
         const titleHtml = `<h2>${escapeHtml(chapter.title)}</h2>`;
-        document.getElementById('textPanel').innerHTML = titleHtml + markdownToHtml(text);
+        const panel = document.getElementById('textPanel');
+        panel.innerHTML = titleHtml + markdownToHtml(text);
         switchTab('text');
+
+        if (scrollTarget) {
+            // 找到章內對應標題就捲到該段；否則（該節點＝整章，章內無此標號標題）捲到章名，而非整頁最頂
+            const el = findHeadingEl(panel, scrollTarget.label, scrollTarget.title) || panel.querySelector('h2') || panel;
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         if (updateHash) {
             history.replaceState(null, '', `#/${currentWorkSlug}/${index + 1}`);
@@ -163,8 +210,16 @@ async function showChapter(index, updateHash = false) {
 function renderTOC() {
     const work = getWork(currentWorkSlug);
     const list = document.getElementById('tocList');
+    list.className = 'toc-list';
     list.innerHTML = '';
 
+    const kp = kepan[currentWorkSlug];
+    if (kp && kp.nodes) {
+        renderKepanTree(kp, list);
+        return;
+    }
+
+    // 後備：無科判資料時，仍顯示平面章節清單
     work.chapters.forEach((chapter, i) => {
         const li = document.createElement('li');
         li.className = 'toc-item' + (i === currentChapter ? ' active' : '');
@@ -172,6 +227,84 @@ function renderTOC() {
         li.onclick = () => showChapter(i, true);
         list.appendChild(li);
     });
+}
+
+function renderKepanTree(kp, container) {
+    container.className = 'kepan-root';
+    let html = '';
+    if (kp.title) html += `<div class="kepan-title">${escapeHtml(kp.title)}</div>`;
+    if (kp.intro) html += `<div class="kepan-intro">${escapeHtml(kp.intro)}</div>`;
+    html += kepanNodesHtml(kp.nodes, 0);
+    container.innerHTML = html;
+
+    // 三角形按鈕：展開／收合子節點
+    container.querySelectorAll('.kepan-toggle').forEach(btn => {
+        btn.addEventListener('click', event => {
+            event.stopPropagation();
+            const branch = btn.closest('.kepan-branch');
+            if (branch) branch.classList.toggle('collapsed');
+        });
+    });
+
+    // 結構性群組標頭（無章節）點整列亦可展開收合
+    container.querySelectorAll('.kepan-item.kepan-group').forEach(el => {
+        if (el.tagName === 'DIV') {
+            el.addEventListener('click', () => {
+                const toggle = el.parentElement.querySelector('.kepan-toggle');
+                if (toggle) toggle.click();
+            });
+        }
+    });
+
+    // 章節節點：點擊跳去閱讀，並捲動到章內對應標題（無對應標題則到章首）
+    container.querySelectorAll('[data-ch]').forEach(el => {
+        el.addEventListener('click', () => {
+            const idx = Number(el.getAttribute('data-ch')) - 1;
+            const target = {
+                label: el.getAttribute('data-kplabel') || '',
+                title: el.getAttribute('data-kptitle') || ''
+            };
+            switchTab('text');
+            showChapter(idx, true, target);
+        });
+    });
+}
+
+function kepanNodesHtml(nodes, depth) {
+    let html = '<div class="kepan-level">';
+    nodes.forEach(node => {
+        const hasCh = node.ch != null;
+        const isActive = hasCh && (node.ch - 1) === currentChapter;
+        const label = node.label ? `<span class="kepan-label">${escapeHtml(node.label)}</span>` : '';
+        const text = `<span class="kepan-text">${escapeHtml(node.title)}</span>`;
+        const badge = hasCh ? `<span class="kepan-ch">第${node.ch}章</span>` : '';
+        const dataAttrs = hasCh ? `data-ch="${node.ch}" data-kplabel="${escapeHtml(node.label || '')}" data-kptitle="${escapeHtml(node.title || '')}"` : '';
+
+        if (node.children) {
+            const collapsed = depth >= 1; // 預設展開到「乙」層，其餘收合，可逐層點開
+            html += `<div class="kepan-node kepan-branch${collapsed ? ' collapsed' : ''}">`;
+            html += '<div class="kepan-row">';
+            html += '<button type="button" class="kepan-toggle" title="展開／收合" aria-label="展開或收合">▾</button>';
+            if (hasCh) {
+                html += `<button type="button" class="kepan-item kepan-head${isActive ? ' active' : ''}" ${dataAttrs}>${label}${text}${badge}</button>`;
+            } else {
+                html += `<div class="kepan-item kepan-head kepan-group">${label}${text}</div>`;
+            }
+            html += '</div>';
+            html += `<div class="kepan-children">${kepanNodesHtml(node.children, depth + 1)}</div>`;
+            html += '</div>';
+        } else {
+            html += '<div class="kepan-row kepan-row-leaf">';
+            if (hasCh) {
+                html += `<button type="button" class="kepan-item kepan-leaf${isActive ? ' active' : ''}" ${dataAttrs}>${label}${text}${badge}</button>`;
+            } else {
+                html += `<div class="kepan-item kepan-leaf kepan-group">${label}${text}</div>`;
+            }
+            html += '</div>';
+        }
+    });
+    html += '</div>';
+    return html;
 }
 
 function switchTab(tab, evt) {
@@ -211,6 +344,7 @@ async function init() {
     try {
         catalog = await loadJson('data/catalog.json');
         footnotes = await loadJson('data/footnotes.json');
+        kepan = await loadJson('data/kepan.json').catch(() => ({}));
         setHeaderText();
 
         const hashMatch = location.hash.match(/^#\/([^/]+)\/(\d+)$/);
