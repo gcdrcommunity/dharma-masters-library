@@ -5,14 +5,20 @@ let currentWorkSlug = null;
 let currentChapter = 0;
 let currentFootnotes = {};
 
+// 資源版本號：改任何 CSS/JS/內容後在 index.html 一併調高，強制瀏覽器重抓、免手動清快取
+const ASSET_VERSION = '3';
+function withVersion(path) {
+    return path + (path.indexOf('?') === -1 ? '?' : '&') + 'v=' + ASSET_VERSION;
+}
+
 async function loadJson(path) {
-    const response = await fetch(path);
+    const response = await fetch(withVersion(path));
     if (!response.ok) throw new Error(`無法載入 ${path}`);
     return response.json();
 }
 
 async function loadText(path) {
-    const response = await fetch(path);
+    const response = await fetch(withVersion(path));
     if (!response.ok) throw new Error(`無法載入 ${path}`);
     return response.text();
 }
