@@ -97,7 +97,8 @@
           "title": "舍利、弟子傳承與結語",
           "path": "content/milarepa-biography/017-第17章-舍利-弟子傳承與結語.md"
         }
-      ]
+      ],
+      "quote": "verse"
     },
     "milarepa-songs": {
       "title": "密勒日巴道歌集",
@@ -349,7 +350,8 @@
           "title": "最後的開示",
           "path": "content/milarepa-songs/061-最後的開示.md"
         }
-      ]
+      ],
+      "quote": "verse"
     },
     "jewel-ornament-of-liberation": {
       "title": "解脫莊嚴寶",
@@ -441,7 +443,8 @@
           "title": "第二十一章 佛事業",
           "path": "content/jewel-ornament-of-liberation/021-第二十一章-佛事業.md"
         }
-      ]
+      ],
+      "quote": "scripture"
     },
     "precious-garland-of-the-supreme-path": {
       "title": "成就勝道寶鬘集",
@@ -565,7 +568,8 @@
           "title": "十項任運成就之大樂",
           "path": "content/precious-garland-of-the-supreme-path/029-十項任運成就之大樂.md"
         }
-      ]
+      ],
+      "quote": "verse"
     },
     "selected-instructions": {
       "title": "教言廣集",
@@ -577,7 +581,8 @@
           "title": "教言廣集",
           "path": "content/selected-instructions/001-第三篇-教言廣集零選.md"
         }
-      ]
+      ],
+      "quote": "verse"
     },
     "gampopa-biography": {
       "title": "岡波巴大師傳",
@@ -589,7 +594,8 @@
           "title": "岡波巴大師傳",
           "path": "content/gampopa-biography/001-第四篇-岡波巴大師傳.md"
         }
-      ]
+      ],
+      "quote": "verse"
     },
     "gampopa-stories": {
       "title": "岡波巴大師的故事",
@@ -601,7 +607,8 @@
           "title": "岡波巴大師的故事",
           "path": "content/gampopa-stories/001-岡波巴大師的故事.md"
         }
-      ]
+      ],
+      "quote": "verse"
     }
   }
 }

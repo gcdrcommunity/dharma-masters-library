@@ -6,7 +6,7 @@ let currentChapter = 0;
 let currentFootnotes = {};
 
 // 資源版本號：改任何 CSS/JS/內容後在 index.html 一併調高，強制瀏覽器重抓、免手動清快取
-const ASSET_VERSION = '3';
+const ASSET_VERSION = '5';
 function withVersion(path) {
     return path + (path.indexOf('?') === -1 ? '?' : '&') + 'v=' + ASSET_VERSION;
 }
@@ -32,9 +32,13 @@ function escapeHtml(text) {
         .replace(/'/g, '&#039;');
 }
 
-function markdownToHtml(md) {
+function markdownToHtml(md, mode) {
     // 逐行解析：標題(#~######)一律獨立成行、不會吸走下一行內文；
     // 連續的一般行併為同一段(以 <br> 分行)，連續的 > 行併為同一 blockquote，空行分隔區塊。
+    // 引用模式：'scripture'（解脫等論典：「」標經證、用配對合併，不用結構猜測）；
+    //           'verse'（密勒日巴傳/道歌等敘事：不用「」配對<第一人稱敘述外層「」會失控>，改用短句偈頌結構開框）
+    const useCarry = mode !== 'verse';
+    const useStructural = mode === 'verse';
     const lines = md.replace(/\r\n/g, '\n').split('\n');
     const out = [];
     let para = [];        // 目前段落的行（已 escape）
@@ -44,17 +48,28 @@ function markdownToHtml(md) {
     let carryBlocks = 0;  // 已延續段數，安全上限用
     const SEP = String.fromCharCode(0); // 內部切點哨兵，不出現在內文
 
-    // 段落／run 是否為經證引用之起始
-    const isCiteStart = (t) => {
-        if (/^(《|頌曰|偈曰|讚曰|經云|經曰|論曰|論云|又云|又曰|又頌|如經|如頌|如云|經中|論中)/.test(t)) return true;
-        if (t.charAt(0) === '「') {
-            const termExplain = /^「[^」]{1,12}」(是說|是指|一詞|意謂|意思是|係指)/.test(t);
-            const plain = t.replace(/<br>/g, '');
-            const opens = (plain.match(/「/g) || []).length;
-            const closes = (plain.match(/」/g) || []).length;
-            return !termExplain && (plain.replace(/\s/g, '').endsWith('」') || opens > closes);
-        }
-        return false;
+    let prevTail = '';    // 前一段結尾：判斷「唱道／頌曰／《X》云」引出語 vs「說道／問／答」對話
+    let inVerse = false;  // 已進入「無引號的道歌」串接：後續短句偈頌併同一塊，遇長句敘述才結束
+    // 本段自身即明確引詞（經證／論頌）
+    const explicitCiteStart = (t) => /^(《|頌曰|偈曰|讚曰|咒曰|經云|經曰|論曰|論云|又云|又曰|又頌|如經|如頌|如云|經中|論中)/.test(t);
+    // 前一段結尾＝歌／偈／經證的「引出語」→ 緊接的偈頌／道歌該框
+    const VERSE_INTRO = /(唱道|唱曰|唱出|唱起|歌唱起來?|高聲歌唱|而歌曰?|作歌|謳歌|吟詠|說偈|說頌|宣偈|頌曰|偈曰|讚曰|咒曰|唱[了過]?[^，。！？」]{0,12}[歌曲頌讚]|[這那][一]?首[^，。！？」]{0,12}[歌曲頌讚]|如下[之這]?[偈頌歌曲]|如是[偈頌]|「[^」]{2,12}[歌曲頌讚]」|》[^「，。]{0,4}[云曰言])[：:。！]?[」』]?$/;
+    // 前一段結尾＝說話的「引出語」→ 緊接的「」是對話，不框
+    const SPEECH_INTRO = /(說道|說|問道|問|答道|答|回答|請求道|請求|都說|齊聲|喊道|喊|叫道|叫|笑道|嘆道|稱道|應道|曰|道)[：:][」』]?$/;
+    // 有長句（≥10 字）＝敘述散文特徵，非偈頌短句
+    const hasLongClause = (plain) => {
+        const t = plain.replace(/［\d+］/g, '').replace(/[「」『』（）()《》\s]/g, '');
+        return t.split(/[，。！？；、：]/).some(c => c.length >= 10);
+    };
+    // 說明／論述用語 → 非偈頌
+    const isExpository = (plain) => /是說|是指|意思是|所謂|也就是|換言之|之謂|這是|這就是|所以說|由此可/.test(plain);
+    // 嚴格短句偈頌：≥3 句、每句 2–9 字均勻短句、非說明文（verse 模式用來開框，可擋住有長句的對話）
+    const strictVerse = (plain) => {
+        if (isExpository(plain)) return false;
+        const t = plain.replace(/［\d+］/g, '').replace(/[「」『』（）()《》\s]/g, '');
+        const cl = t.split(/[，。！？；、：]/).filter(Boolean);
+        if (cl.length < 3) return false;
+        return cl.every(c => c.length >= 2 && c.length <= 9);
     };
 
     // 未閉合的引用累積到閉合才整段輸出成「一個」blockquote（跨空行的偈頌合併）
@@ -68,15 +83,33 @@ function markdownToHtml(md) {
         const plain = body.replace(/<br>/g, '');
         const opens = (plain.match(/「/g) || []).length;
         const closes = (plain.match(/」/g) || []).length;
-        if (carry > 0 || isCiteStart(body)) {
+        const hadQuote = opens > 0 || closes > 0;
+
+        let cite;
+        if (useCarry && carry > 0) cite = true;                     // scripture：延續未閉合「」引文
+        else if (explicitCiteStart(plain)) cite = true;             // 《X》云、頌曰… 本段即引詞（兩模式皆框）
+        else if (VERSE_INTRO.test(prevTail)) { cite = true; if (!useCarry || opens === 0) inVerse = true; } // 引出偈頌；無引號續接
+        else if (SPEECH_INTRO.test(prevTail)) { cite = false; inVerse = false; }               // 對話 → 段落
+        else if (inVerse) {                                          // 偈頌／道歌串接中
+            if (hasLongClause(plain) || isExpository(plain)) { cite = false; inVerse = false; } // 長句／論述 → 結束
+            else cite = true;                                       // 續唱（含短句偈行）
+        } else if (useStructural) {                                  // verse 模式：以短句偈頌結構開框
+            cite = strictVerse(plain);
+            if (cite) inVerse = true;
+        } else cite = false;                                        // scripture 模式：無引出語不猜測
+
+        if (cite) {
             sci.push(body);
-            carry = Math.max(0, carry + opens - closes);
+            if (useCarry) carry = Math.max(0, carry + opens - closes);
             carryBlocks++;
-            if (carry === 0 || carryBlocks > 12) flushSci();
+            // scripture：完整「」引文閉合→各自成塊；裸偈頌／verse 串接不 flush，合為一塊
+            if ((useCarry && carry === 0 && hadQuote && !inVerse) || carryBlocks > 80) { flushSci(); inVerse = false; }
         } else {
-            flushSci();
+            flushSci();                // 遇非偈頌 → 結束並輸出前面累積的偈頌
+            inVerse = false;
             out.push(`<p>${body}</p>`);
         }
+        prevTail = plain.slice(-32);   // 記住本段結尾，供下一段判斷引出語
     };
 
     const flushPara = () => {
@@ -105,6 +138,7 @@ function markdownToHtml(md) {
         const heading = line.match(/^(#{1,6})\s+(.*)$/);
         if (heading) {
             flushAll();
+            prevTail = ''; inVerse = false; // 新標題起段，引出語不跨標題
             const level = Math.min(heading[1].length + 1, 6); // # → h2, ## → h3, ### → h4, #### → h5 …
             out.push(`<h${level}>${escapeHtml(heading[2].trim())}</h${level}>`);
             continue;
@@ -251,7 +285,7 @@ async function showChapter(index, updateHash = false, scrollTarget = null) {
         const text = await loadText(chapter.path);
         const titleHtml = `<h2>${escapeHtml(chapter.title)}</h2>`;
         const panel = document.getElementById('textPanel');
-        panel.innerHTML = titleHtml + markdownToHtml(text);
+        panel.innerHTML = titleHtml + markdownToHtml(text, work.quote || 'scripture');
         switchTab('text');
 
         if (scrollTarget) {
