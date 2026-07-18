@@ -6,7 +6,7 @@ let currentChapter = 0;
 let currentFootnotes = {};
 
 // 資源版本號：改任何 CSS/JS/內容後在 index.html 一併調高，強制瀏覽器重抓、免手動清快取
-const ASSET_VERSION = '6';
+const ASSET_VERSION = '7';
 function withVersion(path) {
     return path + (path.indexOf('?') === -1 ? '?' : '&') + 'v=' + ASSET_VERSION;
 }
@@ -66,6 +66,8 @@ function markdownToHtml(md, mode) {
     // 嚴格短句偈頌：≥3 句、每句 2–9 字均勻短句、非說明文（verse 模式用來開框，可擋住有長句的對話）
     const strictVerse = (plain) => {
         if (isExpository(plain)) return false;
+        // 以冒號結尾＝引出下文（說話／經證），本身非偈頌，例如「說著…喇嘛就問我：」
+        if (/[：:]\s*[」』]?\s*$/.test(plain)) return false;
         const t = plain.replace(/［\d+］/g, '').replace(/[「」『』（）()《》\s]/g, '');
         const cl = t.split(/[，。！？；、：]/).filter(Boolean);
         if (cl.length < 3) return false;
