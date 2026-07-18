@@ -156,6 +156,17 @@
         .chapter-tools .chapters {
             padding: 0 12px 12px;
         }
+
+        /* 正文／目錄分頁：移到閱讀區上方、字體放大 */
+        .nav-tabs-reading {
+            margin: 6px 0 0;
+            gap: 10px;
+        }
+        .nav-tabs-reading .nav-tab {
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 12px 28px;
+        }
     </style>
 </head>
 <body>
@@ -194,11 +205,6 @@
                 <div class="chapters" id="chaptersList"></div>
             </details>
 
-            <div class="nav-tabs">
-                <button class="nav-tab active" data-tab="text" onclick="switchTab('text', event)">正文</button>
-                <button class="nav-tab" data-tab="toc" onclick="switchTab('toc', event)">目錄</button>
-            </div>
-
             <details class="reader-tools" aria-label="朗讀工具">
                 <summary class="reader-tools-summary">
                     朗讀工具
@@ -210,12 +216,19 @@
                         <option value="">自動選擇繁體中文聲音</option>
                     </select>
                     <button type="button" id="readAloudBtn">朗讀本頁</button>
+                    <button type="button" id="rewindBtn" disabled>⏮ 後退</button>
                     <button type="button" id="pauseReadBtn" disabled>暫停</button>
                     <button type="button" id="resumeReadBtn" disabled>繼續</button>
+                    <button type="button" id="forwardBtn" disabled>快轉 ⏭</button>
                     <button type="button" id="stopReadBtn" disabled>停止</button>
                     <div class="reader-status" id="readerStatus" aria-live="polite">預設會自動選擇繁體中文聲音；也可以手動指定。</div>
                 </div>
             </details>
+
+            <div class="nav-tabs nav-tabs-reading">
+                <button class="nav-tab active" data-tab="text" onclick="switchTab('text', event)">正文</button>
+                <button class="nav-tab" data-tab="toc" onclick="switchTab('toc', event)">目錄</button>
+            </div>
 
             <article id="textPanel" class="content-panel active"></article>
             <aside id="tocPanel" class="content-panel">
@@ -260,6 +273,8 @@
         (function () {
             const synth = window.speechSynthesis;
             const readBtn = document.getElementById('readAloudBtn');
+            const rewindBtn = document.getElementById('rewindBtn');
+            const forwardBtn = document.getElementById('forwardBtn');
             const pauseBtn = document.getElementById('pauseReadBtn');
             const resumeBtn = document.getElementById('resumeReadBtn');
             const stopBtn = document.getElementById('stopReadBtn');
@@ -292,6 +307,8 @@
                 pauseBtn.disabled = !reading;
                 resumeBtn.disabled = !paused;
                 stopBtn.disabled = !(reading || paused);
+                if (rewindBtn) rewindBtn.disabled = !(reading || paused);
+                if (forwardBtn) forwardBtn.disabled = !(reading || paused);
             }
 
             function getReadableText() {
@@ -392,22 +409,27 @@
                     return;
                 }
 
-                const sortedVoices = voices
-                    .slice()
-                    .sort((a, b) => {
-                        const chineseDiff = Number(isChineseVoice(b)) - Number(isChineseVoice(a));
-                        if (chineseDiff) return chineseDiff;
-                        return scoreVoice(b) - scoreVoice(a) || voiceLabel(a).localeCompare(voiceLabel(b));
-                    });
+                // 只列中文聲音（移除非中文選項）
+                const chineseVoices = voices
+                    .filter(isChineseVoice)
+                    .sort((a, b) => scoreVoice(b) - scoreVoice(a) || voiceLabel(a).localeCompare(voiceLabel(b)));
 
-                sortedVoices.forEach(voice => {
+                chineseVoices.forEach(voice => {
                     const option = document.createElement('option');
                     option.value = voice.name + '|' + voice.lang;
                     option.textContent = voiceLabel(voice);
                     voiceSelect.appendChild(option);
                 });
 
-                if (selectedValue && sortedVoices.some(voice => voice.name + '|' + voice.lang === selectedValue)) {
+                if (!chineseVoices.length) {
+                    const noneOption = document.createElement('option');
+                    noneOption.value = '__none';
+                    noneOption.textContent = '（此裝置未安裝中文聲音）';
+                    noneOption.disabled = true;
+                    voiceSelect.appendChild(noneOption);
+                }
+
+                if (selectedValue && chineseVoices.some(voice => voice.name + '|' + voice.lang === selectedValue)) {
                     voiceSelect.value = selectedValue;
                 } else {
                     voiceSelect.value = '';
@@ -513,7 +535,20 @@
                 });
             }
 
+            // 後退／快轉：以「段」為單位跳到上一段／下一段
+            function skipRead(delta) {
+                if (!chunks.length) return;
+                isReading = false;        // 阻止當前語句 onend 自動前進
+                synth.cancel();
+                chunkIndex = Math.min(chunks.length - 1, Math.max(0, chunkIndex + delta));
+                isReading = true;
+                setControls('reading');
+                speakNext();
+            }
+
             readBtn.addEventListener('click', startReading);
+            rewindBtn.addEventListener('click', () => skipRead(-1));
+            forwardBtn.addEventListener('click', () => skipRead(1));
             pauseBtn.addEventListener('click', pauseReading);
             resumeBtn.addEventListener('click', resumeReading);
             stopBtn.addEventListener('click', () => stopReading('已停止朗讀。'));
