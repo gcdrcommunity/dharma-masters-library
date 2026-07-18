@@ -157,15 +157,28 @@
             padding: 0 12px 12px;
         }
 
-        /* 正文／目錄分頁：移到閱讀區上方、字體放大 */
+        /* 正文／目錄分頁：閱讀區上方、優雅底線式（去外框） */
         .nav-tabs-reading {
-            margin: 6px 0 0;
-            gap: 10px;
+            gap: 1.6em;
+            margin: 10px 0 0;
+            padding-bottom: 0.5em;
         }
         .nav-tabs-reading .nav-tab {
-            font-size: 1.25rem;
-            font-weight: 700;
-            padding: 12px 28px;
+            font-size: 1.12rem;
+            font-weight: 600;
+            padding: 0.3em 0.15em;
+            border: none;
+            background: transparent;
+            color: var(--secondary);
+            border-radius: 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-tabs-reading .nav-tab.active,
+        .nav-tabs-reading .nav-tab:hover {
+            background: transparent;
+            color: var(--primary);
+            border-color: transparent;
+            border-bottom: 2px solid var(--primary);
         }
     </style>
 </head>

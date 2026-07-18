@@ -430,13 +430,14 @@ button.kepan-item:hover {
     border-color: var(--accent);
     box-shadow: 0 1px 4px rgba(125, 74, 74, 0.1);
 }
+/* 目前閱讀章節：淡暖底 + 左側細色條，標出所在位置但不刺眼 */
 .kepan-item.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: #FFFFFF;
+    background: #FAF0E4;
+    border-color: var(--accent);
+    box-shadow: inset 3px 0 0 var(--primary);
+    color: var(--text);
 }
-.kepan-item.active .kepan-label { background: rgba(255, 255, 255, 0.22); color: #FFFFFF; }
-.kepan-item.active .kepan-ch { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.5); }
+.kepan-item.active .kepan-label { background: var(--accent); color: #FFFFFF; }
 
 .kepan-item.kepan-group {
     cursor: default;
