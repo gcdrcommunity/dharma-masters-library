@@ -6,7 +6,7 @@ let currentChapter = 0;
 let currentFootnotes = {};
 
 // 資源版本號：改任何 CSS/JS/內容後在 index.html 一併調高，強制瀏覽器重抓、免手動清快取
-const ASSET_VERSION = '5';
+const ASSET_VERSION = '6';
 function withVersion(path) {
     return path + (path.indexOf('?') === -1 ? '?' : '&') + 'v=' + ASSET_VERSION;
 }
@@ -263,6 +263,24 @@ function findHeadingEl(panel, label, title) {
     }) || null;
 }
 
+// 正文結尾的上一章／下一章導覽：首章無「上一章」、末章無「下一章」
+function chapterNavHtml(index, total) {
+    let html = '<nav class="chapter-nav" aria-label="章節導覽">';
+    html += index > 0
+        ? `<button type="button" class="chapter-nav-btn" onclick="goToChapter(${index - 1})">← 上一章</button>`
+        : '<span class="chapter-nav-spacer"></span>';
+    html += index < total - 1
+        ? `<button type="button" class="chapter-nav-btn" onclick="goToChapter(${index + 1})">下一章 →</button>`
+        : '<span class="chapter-nav-spacer"></span>';
+    html += '</nav>';
+    return html;
+}
+
+// 切到指定章並捲回頁首（讀完一章往下一章時從章首開始讀）
+function goToChapter(index) {
+    showChapter(index, true).then(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
 async function showChapter(index, updateHash = false, scrollTarget = null) {
     const work = getWork(currentWorkSlug);
     currentChapter = index;
@@ -285,7 +303,7 @@ async function showChapter(index, updateHash = false, scrollTarget = null) {
         const text = await loadText(chapter.path);
         const titleHtml = `<h2>${escapeHtml(chapter.title)}</h2>`;
         const panel = document.getElementById('textPanel');
-        panel.innerHTML = titleHtml + markdownToHtml(text, work.quote || 'scripture');
+        panel.innerHTML = titleHtml + markdownToHtml(text, work.quote || 'scripture') + chapterNavHtml(index, work.chapters.length);
         switchTab('text');
 
         if (scrollTarget) {

@@ -593,3 +593,36 @@ footer {
     .chapter-btn,
     .nav-tab { color: #8B5A52 !important; }
 }
+
+/* 正文結尾：上一章／下一章小按鈕 */
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 2.6em 0 0.4em;
+    padding-top: 1.3em;
+    border-top: 1px solid rgba(122, 92, 58, 0.18);
+}
+
+.chapter-nav-btn {
+    appearance: none;
+    border: 1px solid rgba(122, 92, 58, 0.35);
+    border-radius: 999px;
+    background: #fffaf2;
+    color: #6e4f2a;
+    font-size: 0.9rem;
+    line-height: 1;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.chapter-nav-btn:hover,
+.chapter-nav-btn:focus-visible {
+    background: #f4ead8;
+    outline: none;
+}
+
+.chapter-nav-spacer {
+    flex: 0 0 auto;
+}
