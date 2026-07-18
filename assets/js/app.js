@@ -31,54 +31,74 @@ function markdownToHtml(md) {
     // 連續的一般行併為同一段(以 <br> 分行)，連續的 > 行併為同一 blockquote，空行分隔區塊。
     const lines = md.replace(/\r\n/g, '\n').split('\n');
     const out = [];
-    let para = [];
-    let quote = [];
-    let carry = 0;        // 未閉合的「數：讓跨段落（分行）的偈頌／經證整段延續為引用
+    let para = [];        // 目前段落的行（已 escape）
+    let quote = [];       // > blockquote 的行（已 escape）
+    let sci = [];         // 累積中、尚未閉合的經證引用片段（已 escape）
+    let carry = 0;        // 引用內未閉合的「數（跨空行合併偈頌／經證）
     let carryBlocks = 0;  // 已延續段數，安全上限用
+    const SEP = String.fromCharCode(0); // 內部切點哨兵，不出現在內文
+
+    // 段落／run 是否為經證引用之起始
+    const isCiteStart = (t) => {
+        if (/^(《|頌曰|偈曰|讚曰|經云|經曰|論曰|論云|又云|又曰|又頌|如經|如頌|如云|經中|論中)/.test(t)) return true;
+        if (t.charAt(0) === '「') {
+            const termExplain = /^「[^」]{1,12}」(是說|是指|一詞|意謂|意思是|係指)/.test(t);
+            const plain = t.replace(/<br>/g, '');
+            const opens = (plain.match(/「/g) || []).length;
+            const closes = (plain.match(/」/g) || []).length;
+            return !termExplain && (plain.replace(/\s/g, '').endsWith('」') || opens > closes);
+        }
+        return false;
+    };
+
+    // 未閉合的引用累積到閉合才整段輸出成「一個」blockquote（跨空行的偈頌合併）
+    const flushSci = () => {
+        if (sci.length) { out.push(`<blockquote class="scripture">${sci.join('<br>')}</blockquote>`); sci = []; }
+        carry = 0; carryBlocks = 0;
+    };
+    const flushQuote = () => { if (quote.length) { out.push(`<blockquote>${quote.join('<br>')}</blockquote>`); quote = []; } };
+
+    const handleRun = (body) => {
+        const plain = body.replace(/<br>/g, '');
+        const opens = (plain.match(/「/g) || []).length;
+        const closes = (plain.match(/」/g) || []).length;
+        if (carry > 0 || isCiteStart(body)) {
+            sci.push(body);
+            carry = Math.max(0, carry + opens - closes);
+            carryBlocks++;
+            if (carry === 0 || carryBlocks > 12) flushSci();
+        } else {
+            flushSci();
+            out.push(`<p>${body}</p>`);
+        }
+    };
 
     const flushPara = () => {
         if (!para.length) return;
-        const body = para.join('<br>');
-        const joined = para.join('');
-        const opens = (joined.match(/「/g) || []).length;
-        const closes = (joined.match(/」/g) || []).length;
-
-        // 判定是否為「經證／偈頌引用」
-        let cite = carry > 0; // 延續上一段未閉合的引用
-        if (!cite) {
-            const t = para[0];
-            if (/^(《|頌曰|偈曰|讚曰|經云|經曰|論曰|論云|又云|又曰|又頌|如經|如頌|如云|經中|論中)/.test(t)) {
-                cite = true; // 明確引詞起始
-            } else if (t.charAt(0) === '「') {
-                // 以引號起始：須整段以」收尾（純引句）或引號未閉合（偈頌續行）；
-                // 排除「開頭引個詞、後接散文」（如「『無始輪迴』一詞…」「『供養』是說…」）
-                const termExplain = /^「[^」]{1,12}」(是說|是指|一詞|意謂|意思是|係指)/.test(t);
-                cite = !termExplain && (joined.replace(/\s/g, '').endsWith('」') || opens > closes);
-            }
-        }
-
-        if (cite) {
-            out.push(`<blockquote class="scripture">${body}</blockquote>`);
-            carry = Math.max(0, carry + opens - closes);
-            carryBlocks = carry > 0 ? carryBlocks + 1 : 0;
-            if (carryBlocks > 12) { carry = 0; carryBlocks = 0; } // 來源缺「」時的失控保護
-        } else {
-            out.push(`<p>${body}</p>`);
-            carry = 0; carryBlocks = 0;
-        }
+        let text = para.join('<br>');
+        // 焊接切點 A：引文尾「。」」後同行緊接散文
+        text = text.replace(/([。！？]」)(?=[一-鿿（(])/g, '$1' + SEP);
+        // 焊接切點 B：句末後、同一行中段才起引文（《經》云：「 / 頌曰：「）
+        text = text.replace(/([。！？])(?=(?:《[^》]{1,16}》[^「]{0,10}[云曰言])|頌曰|偈曰|讚曰)/g, '$1' + SEP);
         para = [];
+        for (const run of text.split(SEP)) {
+            if (run.length) handleRun(run);
+        }
     };
-    const flushQuote = () => { if (quote.length) { out.push(`<blockquote>${quote.join('<br>')}</blockquote>`); quote = []; } };
-    const flushAll = () => { flushQuote(); flushPara(); };
+    const flushAll = () => { flushQuote(); flushPara(); flushSci(); };
 
     for (const rawLine of lines) {
         const line = rawLine.trim();
-        if (!line) { flushAll(); continue; }
+        if (!line) {
+            // 空行：結束一般段落；但不 flushSci，讓跨空行的偈頌couplet合併為同一引用區塊
+            flushQuote();
+            flushPara();
+            continue;
+        }
 
         const heading = line.match(/^(#{1,6})\s+(.*)$/);
         if (heading) {
             flushAll();
-            carry = 0; carryBlocks = 0; // 新標題起段，不延續引用
             const level = Math.min(heading[1].length + 1, 6); // # → h2, ## → h3, ### → h4, #### → h5 …
             out.push(`<h${level}>${escapeHtml(heading[2].trim())}</h${level}>`);
             continue;
@@ -87,7 +107,7 @@ function markdownToHtml(md) {
         const bq = line.match(/^>\s?(.*)$/);
         if (bq) {
             flushPara();
-            carry = 0; carryBlocks = 0;
+            flushSci();
             quote.push(escapeHtml(bq[1]));
             continue;
         }
